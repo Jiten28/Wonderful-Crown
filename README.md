@@ -45,12 +45,6 @@ https://mediverse-ai.onrender.com
 
 ---
 
-## 🎨 UI/UX Redesign
-
-> **🚧 In Development:** Full visual refresh — refined premium color palette, smooth Apple-style eased scroll animations replacing the current motion, and a complete mobile + desktop responsive pass across every page.
-
----
-
 ## 👨‍⚕️ Doctor Recommendation
 
 Provides specialist recommendations including:
@@ -68,31 +62,7 @@ Provides specialist recommendations including:
 - Endocrinologist
 - Ophthalmologist
 
-> **🚧 In Development:** Real doctor appointment booking — predicted disease will carry through to a filtered specialist list, with live availability and confirmed bookings tracked per user. See **In Development** section below.
-
----
-
-## 👤 Profile & Settings
-
-> **🚧 In Development:** Full profile management — editable photo, contact info, and preferences that actually persist, plus account settings including theme and language (see below). Previously these existed as placeholder links only.
-
----
-
-## 🌗 Light / Dark Mode
-
-> **🚧 In Development:** A theme toggle (navbar + profile settings) with a full dark palette, saved per user and defaulting to system preference on first visit.
-
----
-
-## 🌐 Multi-language Support
-
-> **🚧 In Development:** Language switcher with UI translations via Flask-Babel, saved as a user preference.
-
----
-
-## 💬 Personalized Support
-
-> **🚧 In Development:** A support/help experience aware of the logged-in user's context, rather than a generic contact form.
+> **Future Update:** Doctor contact details, hospital information, Google Maps integration, and appointment booking links will be added.
 
 ---
 
@@ -341,15 +311,16 @@ Regular users cannot access the Admin Dashboard.
 # 🚀 Future Roadmap
 
 - AI Doctor Chatbot (Ollama)
+- Doctor Appointment Booking
 - Hospital Finder
 - Google Maps Integration
 - Doctor Contact Details
 - Upload Medical Reports
 - Email Notifications
+- Multi-language Support
+- User Profile Management
 - PostgreSQL Cloud Database
 - REST API Support
-
-> Items moved to active development (doctor appointment booking, user profile management, multi-language support, dark mode) are covered in their feature sections above.
 
 ---
 

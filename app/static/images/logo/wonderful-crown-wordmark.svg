@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 60" width="360" height="60" role="img" aria-label="Wonderful Crown">
+  <defs>
+    <linearGradient id="wc-mark-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#12B3A8"/>
+      <stop offset="100%" stop-color="#0B4F5C"/>
+    </linearGradient>
+  </defs>
+  <!-- Simple placeholder mark: a small crown glyph made of three triangles -->
+  <g transform="translate(0,10)">
+    <path d="M2 34 L10 12 L18 26 L28 8 L38 26 L46 12 L54 34 Z"
+          fill="url(#wc-mark-grad)" stroke="none"/>
+    <rect x="2" y="34" width="52" height="6" rx="2" fill="url(#wc-mark-grad)"/>
+  </g>
+  <text x="68" y="40"
+        font-family="'Space Grotesk', sans-serif"
+        font-size="30"
+        font-weight="600"
+        fill="#081428">Wonderful <tspan fill="#12B3A8">Crown</tspan></text>
+</svg>
