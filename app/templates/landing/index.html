@@ -11,63 +11,55 @@
 
 <section class="hero-section">
   <div class="container">
-    <div class="row align-items-center hero-row">
-      <!-- Left -->
+    <div class="hero-row">
+      <span class="eyebrow">AI-Assisted Diagnosis</span>
 
-      <div class="col-lg-6">
-        <h1 class="display-2 fw-bold">
-          AI Powered
+      <h1 class="display-2 fw-bold">
+        Know what's happening in your body,
+        <span class="text-primary">before it escalates.</span>
+      </h1>
 
-          <span class="text-primary"> Healthcare </span>
+      <p class="lead mt-4">
+        Describe your symptoms. Get a confidence-scored assessment, a
+        specialist match, and a plan &mdash; grounded in clinical data, not
+        guesswork.
+      </p>
 
-          Recommendation
-        </h1>
+      <div class="hero-buttons mt-5">
+        <button
+          class="btn btn-primary-custom"
+          onclick="
+            document
+              .querySelector('.features-section')
+              .scrollIntoView({ behavior: 'smooth' })
+          "
+        >
+          Start an assessment
+        </button>
 
-        <p class="lead mt-4">
-          Personalized disease prediction, medicine recommendation, AI-powered
-          healthcare analytics, and intelligent recommendations.
-        </p>
-
-        <div class="hero-buttons mt-5">
-          <button
-            class="btn btn-primary-custom me-3"
-            onclick="
-              document
-                .querySelector('.features-section')
-                .scrollIntoView({ behavior: 'smooth' })
-            "
-          >
-            Explore Platform
-          </button>
-
-          <button
-            class="btn btn-login"
-            onclick="
-              document
-                .querySelector('.stats-section')
-                .scrollIntoView({ behavior: 'smooth' })
-            "
-          >
-            Learn More
-          </button>
-        </div>
+        <button
+          class="btn btn-login"
+          onclick="
+            document
+              .querySelector('.workflow-section')
+              .scrollIntoView({ behavior: 'smooth' })
+          "
+        >
+          See how it works
+        </button>
       </div>
-      <!-- Right -->
 
-      <div class="col-lg-6">
-        <div class="hero-logo-container">
-          <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-stat-strip">
+        <div class="hero-stat">
+          <div class="hero-stat-num">41</div>
+          <div class="hero-stat-cap">Conditions covered</div>
+        </div>
 
-          <div class="hero-glow hero-glow-2"></div>
+        <div class="hero-stat-divider"></div>
 
-          <div class="hero-glow hero-glow-3"></div>
-
-          <img
-            id="heroLogo"
-            src="{{ url_for('static', filename='images/logo/Logo.svg') }}"
-            class="hero-logo"
-            alt="MediVerse AI"
-          />
+        <div class="hero-stat">
+          <div class="hero-stat-num">9</div>
+          <div class="hero-stat-cap">Specialties matched</div>
         </div>
       </div>
     </div>
@@ -87,9 +79,9 @@
             alt="Prediction"
           />
 
-          <h2>95%</h2>
+          <h2>132</h2>
 
-          <h5>Prediction Accuracy</h5>
+          <h5>Tracked Symptoms</h5>
 
           <p>Machine Learning Disease Prediction</p>
         </div>
@@ -103,9 +95,9 @@
             alt="Dashboard"
           />
 
-          <h2>50K+</h2>
+          <h2>4,920</h2>
 
-          <h5>Healthcare Records</h5>
+          <h5>Training Records</h5>
 
           <p>Public Healthcare Dataset</p>
         </div>

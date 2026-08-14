@@ -1,36 +1,58 @@
 :root{
 
-    /* Colors */
+    /* ===== Brand — Deep Clinical Navy ===== */
 
-    --primary:#2563EB;
-    --primary-light:#60A5FA;
-    --secondary:#06B6D4;
+    --primary:#12B3A8;
+    --primary-dark:#0B8F86;
+    --primary-light:#4DD8CC;
+
+    --secondary:#0B4F5C;
+    --secondary-light:#3A7986;
+
     --accent:#22C55E;
 
-    --dark:#0F172A;
-    --text:#1E293B;
-    --text-light:#64748B;
+    /* ===== Navy scale (surfaces, dark sections) ===== */
+
+    --navy-950:#081428;
+    --navy-900:#0B1F38;
+    --navy-800:#0F2A44;
+
+    --dark:#081428;
+    --text:#16202B;
+    --text-light:#5B6672;
 
     --white:#FFFFFF;
-    --bg:#F8FAFC;
+    --bg:#F7FAFA;
+    --bg-tint:#EAF3F3;
 
     --glass:rgba(255,255,255,.65);
+    --glass-dark:rgba(255,255,255,.06);
+    --glass-dark-border:rgba(255,255,255,.14);
 
-    /* Radius */
+    --glow-primary:rgba(18,179,168,.20);
+    --glow-secondary:rgba(11,79,92,.5);
+
+    /* ===== Typography ===== */
+
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+
+    /* ===== Radius ===== */
 
     --radius-sm:12px;
     --radius-md:20px;
     --radius-lg:30px;
 
-    /* Shadow */
+    /* ===== Shadow ===== */
 
-    --shadow-sm:0 10px 25px rgba(0,0,0,.08);
+    --shadow-sm:0 10px 25px rgba(8,20,40,.08);
 
-    --shadow-md:0 15px 45px rgba(37,99,235,.15);
+    --shadow-md:0 15px 45px rgba(11,79,92,.18);
 
-    --shadow-lg:0 30px 80px rgba(37,99,235,.2);
+    --shadow-lg:0 30px 80px rgba(8,20,40,.24);
 
-    /* Transition */
+    /* ===== Transition ===== */
 
     --transition:.35s ease;
 

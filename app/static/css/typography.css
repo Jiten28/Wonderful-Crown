@@ -1,6 +1,6 @@
 body{
 
-    font-family:'Inter',sans-serif;
+    font-family:var(--font-body);
 
     color:var(--text);
 
@@ -10,9 +10,29 @@ body{
 
 h1,h2,h3,h4{
 
-    font-family:'Poppins',sans-serif;
+    font-family:var(--font-display);
+    font-weight:600;
 
     color:var(--dark);
+
+}
+
+.mono{
+
+    font-family:var(--font-mono);
+
+}
+
+.eyebrow{
+
+    font-family:var(--font-body);
+    font-size:.72rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--primary);
+    display:inline-block;
+    margin-bottom:18px;
 
 }
 
