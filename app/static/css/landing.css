@@ -251,6 +251,12 @@
 }
 
 .stat-svg{
+    background: var(--bg-tint);
+    border: 1px solid rgba(11,79,92,.14);
+    border-radius: 50%;
+    padding: 16px;
+    box-sizing: border-box;
+
     display:block;
     width:80px;
     height:80px;
@@ -356,7 +362,7 @@
 
 .workflow-card{
 
-    background:#ffffff;
+    background:var(--surface);
 
     border-radius:25px;
 
@@ -379,6 +385,12 @@
 }
 
 .workflow-icon{
+    background: var(--bg-tint);
+    border: 1px solid rgba(11,79,92,.14);
+    border-radius: 50%;
+    padding: 16px;
+    box-sizing: border-box;
+
 
     display:block;
 
@@ -449,6 +461,12 @@
 }
 
 .module-icon{
+    background: var(--bg-tint);
+    border: 1px solid rgba(11,79,92,.14);
+    border-radius: 50%;
+    padding: 16px;
+    box-sizing: border-box;
+
 
     width:110px;
 
@@ -518,7 +536,7 @@
 
 .cta-card .btn-login{
     background:#fff;
-    color:#111827;
+    color:var(--dark);
     border:none;
 }
 
@@ -527,7 +545,7 @@
 ========================== */
 
 .footer{
-    background:#0f172a;
+    background:var(--dark);
     color:#fff;
     padding:80px 0 30px;
     margin-top:120px;
@@ -543,7 +561,7 @@
 }
 
 .footer p{
-    color:#cbd5e1;
+    color:rgba(255,255,255,.65);
     line-height:1.8;
     font-size:15px;
 }
@@ -559,13 +577,13 @@
 }
 
 .footer-links a{
-    color:#cbd5e1;
+    color:rgba(255,255,255,.65);
     text-decoration:none;
     transition:.3s;
 }
 
 .footer-links a:hover{
-    color:#60a5fa;
+    color:var(--primary-light);
 }
 
 .footer hr{
@@ -579,11 +597,23 @@
     text-align:center;
 }
 
+.footer-brand-lockup{
+    text-decoration:none;
+    gap:12px;
+    margin-bottom:14px;
+}
+
 .footer-logo{
-    width:170px;
-    height:auto;
+    width:44px;
+    height:44px;
     display:block;
-    margin:0 auto -15px;
+}
+
+.footer-brand-text{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.2rem;
+    color:#fff;
 }
 
 .footer-brand p{

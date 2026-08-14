@@ -25,6 +25,10 @@
     --bg:#F7FAFA;
     --bg-tint:#EAF3F3;
 
+    --surface:#FFFFFF;
+    --surface-glass:rgba(255,255,255,.9);
+    --border-soft:rgba(11,79,92,.12);
+
     --glass:rgba(255,255,255,.65);
     --glass-dark:rgba(255,255,255,.06);
     --glass-dark-border:rgba(255,255,255,.14);
@@ -56,4 +60,64 @@
 
     --transition:.35s ease;
 
+}
+
+/* =====================================================
+   DARK MODE — same variable names, remapped values.
+   Toggled by data-theme="dark" on <html>, set by theme.js.
+   Default for first-time visitors follows prefers-color-scheme;
+   an explicit user choice (data-theme attr) always wins.
+===================================================== */
+
+[data-theme="dark"]{
+
+    --primary:#2FE6D6;
+    --primary-dark:#12B3A8;
+    --primary-light:#7FF0E4;
+
+    --secondary:#3A7986;
+    --secondary-light:#5FA3B0;
+
+    --text:#E9EEF1;
+    --text-light:#9DAAB3;
+
+    --bg:#081428;
+    --bg-tint:#0F2A44;
+
+    --surface:#0B1F38;
+    --surface-glass:rgba(15,42,68,.85);
+    --border-soft:rgba(255,255,255,.12);
+
+    --glass:rgba(255,255,255,.06);
+
+    --glow-primary:rgba(47,230,214,.16);
+    --glow-secondary:rgba(58,121,134,.4);
+
+    --shadow-sm:0 10px 25px rgba(0,0,0,.35);
+    --shadow-md:0 15px 45px rgba(0,0,0,.4);
+    --shadow-lg:0 30px 80px rgba(0,0,0,.5);
+
+}
+
+@media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]):not([data-theme="dark"]){
+        --primary:#2FE6D6;
+        --primary-dark:#12B3A8;
+        --primary-light:#7FF0E4;
+        --secondary:#3A7986;
+        --secondary-light:#5FA3B0;
+        --text:#E9EEF1;
+        --text-light:#9DAAB3;
+        --bg:#081428;
+        --bg-tint:#0F2A44;
+        --surface:#0B1F38;
+        --surface-glass:rgba(15,42,68,.85);
+        --border-soft:rgba(255,255,255,.12);
+        --glass:rgba(255,255,255,.06);
+        --glow-primary:rgba(47,230,214,.16);
+        --glow-secondary:rgba(58,121,134,.4);
+        --shadow-sm:0 10px 25px rgba(0,0,0,.35);
+        --shadow-md:0 15px 45px rgba(0,0,0,.4);
+        --shadow-lg:0 30px 80px rgba(0,0,0,.5);
+    }
 }

@@ -8,7 +8,7 @@
     align-items:center;
     justify-content:center;
     padding:120px 0;
-    background:linear-gradient(135deg,#f8fbff,#eef6ff);
+    background:linear-gradient(135deg,var(--bg-tint),var(--bg));
 }
 
 .auth-card{
@@ -16,7 +16,7 @@
     max-width:500px;
     width:100%;
 
-    background:rgba(255,255,255,.9);
+    background:var(--surface-glass);
 
     backdrop-filter:blur(18px);
 
@@ -42,7 +42,7 @@
 
     text-align:center;
 
-    color:#64748b;
+    color:var(--text-light);
 
     margin-bottom:35px;
 
@@ -100,7 +100,7 @@
 
     font-size:20px;
 
-    color:#94a3b8;
+    color:var(--text-light);
 
     transition:.3s;
 
@@ -128,7 +128,7 @@
 
     height:7px;
 
-    background:#e2e8f0;
+    background:var(--bg-tint);
 
     border-radius:50px;
 
@@ -154,6 +154,6 @@
 
     margin-top:8px;
 
-    color:#64748b;
+    color:var(--text-light);
 
 }

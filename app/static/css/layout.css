@@ -15,9 +15,9 @@ body::before{
     inset:0;
     z-index:-2;
     background:
-        radial-gradient(circle at 80% 10%, rgba(37,99,235,.12), transparent 35%),
-        radial-gradient(circle at 10% 80%, rgba(6,182,212,.10), transparent 35%),
-        linear-gradient(180deg,#f8fbff,#ffffff);
+        radial-gradient(circle at 80% 10%, var(--glow-primary), transparent 35%),
+        radial-gradient(circle at 10% 80%, var(--glow-secondary), transparent 35%),
+        linear-gradient(180deg, var(--bg), var(--bg));
 }
 
 body::after{
@@ -26,9 +26,10 @@ body::after{
     inset:0;
     z-index:-1;
     background-image:
-        linear-gradient(rgba(37,99,235,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37,99,235,.03) 1px, transparent 1px);
+        linear-gradient(var(--border-soft) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
     background-size:60px 60px;
+    opacity:.35;
     pointer-events:none;
 }
 
@@ -104,7 +105,7 @@ section{
 
 #mainNavbar{
 
-    background:rgba(255,255,255,.65);
+    background:var(--surface-glass);
 
     backdrop-filter:blur(18px);
 
@@ -115,6 +116,60 @@ section{
 #mainNavbar.scrolled{
 
     box-shadow:var(--shadow-sm);
+
+}
+
+/* ==========================
+   THEME TOGGLE
+========================== */
+
+.theme-toggle{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    border:1px solid var(--border-soft);
+
+    background:transparent;
+
+    color:var(--text);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.theme-toggle:hover{
+
+    background:var(--bg-tint);
+
+}
+
+.theme-toggle .icon-moon{
+
+    display:none;
+
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun{
+
+    display:none;
+
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon{
+
+    display:block;
 
 }
 
@@ -136,7 +191,7 @@ section{
 
 footer{
 
-    background:#fff;
+    background:var(--surface);
 
     padding:60px 0;
 
@@ -156,9 +211,9 @@ footer{
 
     align-items:center;
 
-    background:#fff;
+    background:var(--surface);
 
-    border:1px solid #e2e8f0;
+    border:1px solid var(--border-soft);
 
     border-radius:50px;
 
@@ -170,7 +225,7 @@ footer{
 
 .user-dropdown:hover{
 
-    background:#fff;
+    background:var(--surface);
 
 }
 
@@ -206,6 +261,10 @@ footer{
 
     padding:12px 0;
 
+    background:var(--surface);
+
+    box-shadow:var(--shadow-md);
+
 }
 
 .dropdown-item{
@@ -214,11 +273,13 @@ footer{
 
     transition:.25s;
 
+    color:var(--text);
+
 }
 
 .dropdown-item:hover{
 
-    background:#eff6ff;
+    background:var(--bg-tint);
 
     color:var(--primary);
 
