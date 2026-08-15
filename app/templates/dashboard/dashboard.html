@@ -24,11 +24,7 @@
       </div>
 
       <div class="col-lg-6 text-center">
-        <img
-          src="{{ url_for('static', filename='images/icons/dashboard.svg') }}"
-          class="dashboard-svg"
-          alt="Dashboard"
-        />
+        <i class="bi bi-speedometer2 dashboard-svg"></i>
       </div>
     </div>
   </div>
@@ -41,9 +37,7 @@
     <div class="row g-4">
       <div class="col-lg-3 col-md-6">
         <div class="dashboard-stat">
-          <img
-            src="{{ url_for('static', filename='images/icons/prediction.svg') }}"
-          />
+          <i class="bi bi-clipboard2-pulse stat-icon"></i>
           <h2>{{ total_predictions }}</h2>
           <p>Total Predictions</p>
         </div>
@@ -51,9 +45,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="dashboard-stat">
-          <img
-            src="{{ url_for('static', filename='images/icons/brain.svg') }}"
-          />
+          <i class="bi bi-cpu stat-icon"></i>
           <h2>
             {% if latest_prediction %} {{ latest_prediction.confidence }}% {%
             else %} 0% {% endif %}
@@ -65,9 +57,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="dashboard-stat">
-          <img
-            src="{{ url_for('static', filename='images/icons/medicine.svg') }}"
-          />
+          <i class="bi bi-capsule stat-icon"></i>
           <h2>
             {% if latest_prediction %} {{ latest_prediction.disease }} {% else
             %} - {% endif %}
@@ -79,9 +69,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="dashboard-stat">
-          <img
-            src="{{ url_for('static', filename='images/icons/admin.svg') }}"
-          />
+          <i class="bi bi-shield-lock stat-icon"></i>
           <h2>24/7</h2>
           <p>Availability</p>
         </div>

@@ -10,6 +10,7 @@
 ========================================== -->
 
 <section class="hero-section">
+  <div id="vanta-bg" class="vanta-bg-layer"></div>
   <div class="container">
     <div class="hero-row">
       <span class="eyebrow">AI-Assisted Diagnosis</span>
@@ -49,7 +50,7 @@
         </button>
       </div>
 
-      <div class="hero-stat-strip">
+      <div class="hero-stat-strip parallax-el">
         <div class="hero-stat">
           <div class="hero-stat-num">41</div>
           <div class="hero-stat-cap">Conditions covered</div>
@@ -60,62 +61,6 @@
         <div class="hero-stat">
           <div class="hero-stat-num">9</div>
           <div class="hero-stat-cap">Specialties matched</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= KPI ================= -->
-
-<section class="stats-section">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
-        <div class="stat-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/prediction.svg') }}"
-            class="stat-svg"
-            alt="Prediction"
-          />
-
-          <h2>132</h2>
-
-          <h5>Tracked Symptoms</h5>
-
-          <p>Machine Learning Disease Prediction</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="stat-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/dashboard.svg') }}"
-            class="stat-svg"
-            alt="Dashboard"
-          />
-
-          <h2>4,920</h2>
-
-          <h5>Training Records</h5>
-
-          <p>Public Healthcare Dataset</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-12">
-        <div class="stat-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/brain.svg') }}"
-            class="stat-svg"
-            alt="Brain"
-          />
-
-          <h2>24/7</h2>
-
-          <h5>AI Recommendation</h5>
-
-          <p>Real-time Intelligent Suggestions</p>
         </div>
       </div>
     </div>
@@ -137,10 +82,7 @@
 
     <div class="row align-items-center gy-5">
       <div class="col-lg-6">
-        <img
-          src="{{ url_for('static', filename='images/icons/prediction.svg') }}"
-          class="img-fluid feature-image"
-        />
+        <i class="bi bi-clipboard2-pulse img-fluid feature-image"></i>
       </div>
 
       <div class="col-lg-6">
@@ -150,15 +92,17 @@
           Predict diseases accurately using trained Machine Learning models
           powered by healthcare datasets.
         </p>
+
+        <div class="feature-stat-row">
+          <span><strong>132</strong> tracked symptoms</span>
+          <span><strong>4,920</strong> training records</span>
+        </div>
       </div>
     </div>
 
     <div class="row align-items-center gy-5 flex-lg-row-reverse mt-100">
       <div class="col-lg-6">
-        <img
-          src="{{ url_for('static', filename='images/icons/medicine.svg') }}"
-          class="img-fluid feature-image"
-        />
+        <i class="bi bi-capsule img-fluid feature-image"></i>
       </div>
 
       <div class="col-lg-6">
@@ -173,10 +117,7 @@
 
     <div class="row align-items-center gy-5 mt-100">
       <div class="col-lg-6">
-        <img
-          src="{{ url_for('static', filename='images/icons/analytics.svg') }}"
-          class="img-fluid feature-image"
-        />
+        <i class="bi bi-graph-up-arrow img-fluid feature-image"></i>
       </div>
 
       <div class="col-lg-6">
@@ -209,11 +150,7 @@
     <div class="row text-center g-4">
       <div class="col-lg-3 col-md-6">
         <div class="workflow-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/doctor.svg') }}"
-            class="workflow-icon"
-            alt="Doctor"
-          />
+          <i class="bi bi-heart-pulse workflow-icon"></i>
 
           <h4>Enter Symptoms</h4>
 
@@ -223,11 +160,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="workflow-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/brain.svg') }}"
-            class="workflow-icon"
-            alt="Brain"
-          />
+          <i class="bi bi-cpu workflow-icon"></i>
 
           <h4>AI Prediction</h4>
 
@@ -237,11 +170,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="workflow-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/medicine.svg') }}"
-            class="workflow-icon"
-            alt="Medicine"
-          />
+          <i class="bi bi-capsule workflow-icon"></i>
 
           <h4>Recommendations</h4>
 
@@ -251,11 +180,7 @@
 
       <div class="col-lg-3 col-md-6">
         <div class="workflow-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/analytics.svg') }}"
-            class="workflow-icon"
-            alt="Analytics"
-          />
+          <i class="bi bi-graph-up-arrow workflow-icon"></i>
 
           <h4>Analytics</h4>
 
@@ -281,10 +206,7 @@
     <div class="row g-4">
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/prediction.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-clipboard2-pulse module-icon"></i>
 
           <h4>Disease Prediction</h4>
 
@@ -294,10 +216,7 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/medicine.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-capsule module-icon"></i>
 
           <h4>Medicine Recommendation</h4>
 
@@ -307,10 +226,7 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/analytics.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-graph-up-arrow module-icon"></i>
 
           <h4>Healthcare Analytics</h4>
 
@@ -320,10 +236,7 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/doctor.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-heart-pulse module-icon"></i>
 
           <h4>AI Doctor</h4>
 
@@ -333,10 +246,7 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/dashboard.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-speedometer2 module-icon"></i>
 
           <h4>Dashboard</h4>
 
@@ -346,10 +256,7 @@
 
       <div class="col-lg-4 col-md-6">
         <div class="module-card">
-          <img
-            src="{{ url_for('static', filename='images/icons/admin.svg') }}"
-            class="module-icon"
-          />
+          <i class="bi bi-shield-lock module-icon"></i>
 
           <h4>Admin Panel</h4>
 
@@ -379,4 +286,8 @@
   </div>
 </section>
 
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/cursor-effects.js') }}"></script>
 {% endblock %}

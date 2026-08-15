@@ -23,7 +23,10 @@ body::before{
 body::after{
     content:"";
     position:fixed;
-    inset:0;
+    top:84px;
+    right:0;
+    bottom:0;
+    left:0;
     z-index:-1;
     background-image:
         linear-gradient(var(--border-soft) 1px, transparent 1px),
@@ -55,13 +58,13 @@ section{
 
 .btn-primary-custom{
 
-    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    background:linear-gradient(135deg,var(--btn-grad-1),var(--btn-grad-2));
 
     color:#fff;
 
     border:none;
 
-    border-radius:50px;
+    border-radius:var(--radius-pill);
 
     padding:14px 34px;
 
@@ -85,7 +88,7 @@ section{
 
     border:1px solid #ddd;
 
-    border-radius:50px;
+    border-radius:var(--radius-pill);
 
     padding:14px 34px;
 
@@ -215,7 +218,7 @@ footer{
 
     border:1px solid var(--border-soft);
 
-    border-radius:50px;
+    border-radius:var(--radius-pill);
 
     padding:6px 14px;
 
@@ -237,7 +240,7 @@ footer{
 
     border-radius:50%;
 
-    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    background:linear-gradient(135deg,var(--btn-grad-1),var(--btn-grad-2));
 
     color:#fff;
 
@@ -257,7 +260,7 @@ footer{
 
     border:none;
 
-    border-radius:16px;
+    border-radius:var(--radius-sm);
 
     padding:12px 0;
 
@@ -323,7 +326,7 @@ footer{
 
     background:var(--primary);
 
-    border-radius:20px;
+    border-radius:var(--radius-md);
 
 }
 

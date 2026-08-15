@@ -6,7 +6,8 @@
 {% endblock %} {% block title %} Register {% endblock %} {% block content %}
 
 <section class="auth-section">
-  <div class="auth-card">
+  <div id="vanta-bg" class="vanta-bg-layer"></div>
+  <div class="auth-card parallax-el">
     <h2>Create Account</h2>
 
     <p>Join Wonderful Crown</p>
@@ -73,4 +74,5 @@
 
 {% block js %}
 <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script src="{{ url_for('static', filename='js/cursor-effects.js') }}"></script>
 {% endblock %} {% endblock %}

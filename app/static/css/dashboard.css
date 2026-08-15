@@ -36,8 +36,19 @@
 .dashboard-svg{
     width:100%;
     max-width:420px;
-    display:block;
+    aspect-ratio:1/1;
     margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background: var(--bg-tint);
+    border: 1px solid rgba(11,79,92,.14);
+    border-radius:var(--radius-lg);
+
+    font-size:6rem;
+    color:var(--primary);
+
     animation:floatLogo 5s ease-in-out infinite;
 }
 
@@ -49,13 +60,13 @@
 .dashboard-card,
 .analytics-card{
 
-    background:rgba(255,255,255,.75);
+    background:var(--surface-glass);
 
     backdrop-filter:blur(18px);
 
-    border-radius:25px;
+    border-radius:var(--radius-md);
 
-    padding:40px;
+    padding:var(--space-card);
 
     border:1px solid rgba(37,99,235,.08);
 
@@ -79,7 +90,7 @@
 
 .form-control{
 
-    border-radius:15px;
+    border-radius:var(--radius-sm);
 
     padding:16px;
 
@@ -105,9 +116,9 @@
 
     background:var(--surface);
 
-    border-radius:22px;
+    border-radius:var(--radius-md);
 
-    padding:30px;
+    padding:var(--space-card);
 
     text-align:center;
 
@@ -125,11 +136,21 @@
 
 }
 
-.dashboard-stat img{
+.dashboard-stat .stat-icon{
 
-    width:70px;
+    width:56px;
+    height:56px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
 
-    margin-bottom:20px;
+    background:var(--bg-tint);
+    border:1px solid rgba(11,79,92,.14);
+    border-radius:50%;
+
+    font-size:1.4rem;
+    color:var(--primary);
 
 }
 
@@ -155,9 +176,9 @@
 
     background:var(--surface);
 
-    border-radius:25px;
+    border-radius:var(--radius-md);
 
-    padding:35px;
+    padding:var(--space-card);
 
     height:350px;
 
@@ -236,10 +257,10 @@
 ========================== */
 
 .doctor-card{
-    background:rgba(255,255,255,.85);
+    background:var(--surface-glass);
     backdrop-filter:blur(14px);
-    border-radius:24px;
-    padding:35px;
+    border-radius:var(--radius-md);
+    padding:var(--space-card);
     text-align:center;
     box-shadow:0 15px 40px rgba(0,0,0,.08);
     transition:.35s;
@@ -253,12 +274,17 @@
     background: var(--bg-tint);
     border: 1px solid rgba(11,79,92,.14);
     border-radius: 50%;
-    padding: 16px;
     box-sizing: border-box;
 
-    width:120px;
-    display:block;
+    width:90px;
+    height:90px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     margin:0 auto 25px;
+
+    font-size:2rem;
+    color:var(--primary);
 }
 
 .doctor-card h4{
@@ -279,9 +305,9 @@
 
     background:var(--surface);
 
-    padding:35px;
+    padding:var(--space-card);
 
-    border-radius:25px;
+    border-radius:var(--radius-md);
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
@@ -313,9 +339,9 @@
 
     background:var(--surface);
 
-    padding:40px;
+    padding:var(--space-card);
 
-    border-radius:25px;
+    border-radius:var(--radius-md);
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
@@ -334,7 +360,7 @@
 
     height:55px;
 
-    border-radius:12px;
+    border-radius:var(--radius-sm);
 
 }
 
@@ -346,9 +372,9 @@
 
     background:var(--surface);
 
-    padding:35px;
+    padding:var(--space-card);
 
-    border-radius:25px;
+    border-radius:var(--radius-md);
 
     box-shadow:0 15px 40px rgba(0,0,0,.08);
 
@@ -360,7 +386,7 @@
 
     border:2px dashed var(--bg-tint);
 
-    border-radius:20px;
+    border-radius:var(--radius-md);
 
     display:flex;
 

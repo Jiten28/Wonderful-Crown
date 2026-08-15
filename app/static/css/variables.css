@@ -42,11 +42,19 @@
     --font-body:'Inter',sans-serif;
     --font-mono:'IBM Plex Mono',monospace;
 
+    /* Button/gradient-on-white-text pair — verified >=4.5:1 with #fff */
+    --btn-grad-1:#3A7986;
+    --btn-grad-2:#0B4F5C;
+
     /* ===== Radius ===== */
 
     --radius-sm:12px;
-    --radius-md:20px;
+    --radius-md:24px;
     --radius-lg:30px;
+    --radius-pill:50px;
+
+    /* Card/panel padding — consolidates what was 30/35/40/45px scattered per-component */
+    --space-card:40px;
 
     /* ===== Shadow ===== */
 
@@ -78,6 +86,11 @@
     --secondary:#3A7986;
     --secondary-light:#5FA3B0;
 
+    /* Button/gradient-on-white-text pair — verified >=4.5:1 with #fff in dark mode.
+       (--primary in dark mode is a bright accent teal; too light for white text.) */
+    --btn-grad-1:#12746B;
+    --btn-grad-2:#0B4F5C;
+
     --text:#E9EEF1;
     --text-light:#9DAAB3;
 
@@ -106,6 +119,8 @@
         --primary-light:#7FF0E4;
         --secondary:#3A7986;
         --secondary-light:#5FA3B0;
+        --btn-grad-1:#12746B;
+        --btn-grad-2:#0B4F5C;
         --text:#E9EEF1;
         --text-light:#9DAAB3;
         --bg:#081428;
