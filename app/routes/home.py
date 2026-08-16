@@ -18,6 +18,8 @@ from app import db
 
 from io import BytesIO
 from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import (
     SimpleDocTemplate,
@@ -211,7 +213,77 @@ def export_pdf():
 
     buffer = BytesIO()
 
-    document = SimpleDocTemplate(buffer)
+    document = SimpleDocTemplate(
+        buffer,
+        pagesize=letter,
+        topMargin=1.15 * inch,
+        bottomMargin=0.85 * inch,
+    )
+
+    def _draw_letterhead_and_watermark(canvas, doc):
+        """Runs on every page. Draws a text-based letterhead (brand
+        name + tagline + rule + page number) and a subtle diagonal
+        watermark behind the content.
+
+        Note: this is text-based, not the actual logo artwork —
+        ReportLab can't render SVG directly and no SVG-to-PDF
+        library (e.g. svglib) is in requirements.txt, so embedding
+        the real Logo.svg mark isn't possible without adding a new
+        dependency. Flagging this rather than silently working
+        around it.
+        """
+
+        page_width, page_height = doc.pagesize
+
+        canvas.saveState()
+
+        # --- Letterhead ---
+        canvas.setFont("Helvetica-Bold", 16)
+        canvas.setFillColor(colors.HexColor("#0B4F5C"))
+        canvas.drawString(
+            0.75 * inch, page_height - 0.65 * inch, "Wonderful Crown"
+        )
+
+        canvas.setFont("Helvetica", 8)
+        canvas.setFillColor(colors.HexColor("#5B6672"))
+        canvas.drawString(
+            0.75 * inch,
+            page_height - 0.82 * inch,
+            "AI-Assisted Healthcare Recommendation System",
+        )
+
+        canvas.setStrokeColor(colors.HexColor("#0B4F5C"))
+        canvas.setLineWidth(1)
+        canvas.line(
+            0.75 * inch,
+            page_height - 0.95 * inch,
+            page_width - 0.75 * inch,
+            page_height - 0.95 * inch,
+        )
+
+        # --- Footer: page number ---
+        canvas.setFont("Helvetica", 8)
+        canvas.setFillColor(colors.HexColor("#5B6672"))
+        canvas.drawRightString(
+            page_width - 0.75 * inch, 0.5 * inch, f"Page {doc.page}"
+        )
+        canvas.drawString(
+            0.75 * inch,
+            0.5 * inch,
+            "Generated automatically by Wonderful Crown.",
+        )
+
+        # --- Watermark: diagonal, low-opacity, behind content ---
+        canvas.saveState()
+        canvas.setFont("Helvetica-Bold", 60)
+        canvas.setFillColor(colors.HexColor("#12B3A8"))
+        canvas.setFillAlpha(0.06)
+        canvas.translate(page_width / 2, page_height / 2)
+        canvas.rotate(45)
+        canvas.drawCentredString(0, 0, "WONDERFUL CROWN")
+        canvas.restoreState()
+
+        canvas.restoreState()
 
     styles = getSampleStyleSheet()
 
@@ -274,14 +346,11 @@ def export_pdf():
 
     elements.append(Spacer(1, 20))
 
-    footer = Paragraph(
-        "<i>Generated automatically by Wonderful Crown.</i>",
-        styles["Italic"]
+    document.build(
+        elements,
+        onFirstPage=_draw_letterhead_and_watermark,
+        onLaterPages=_draw_letterhead_and_watermark,
     )
-
-    elements.append(footer)
-
-    document.build(elements)
 
     buffer.seek(0)
 

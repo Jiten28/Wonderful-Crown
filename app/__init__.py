@@ -35,11 +35,42 @@ def create_app():
     from app.routes.prediction import prediction_bp
     app.register_blueprint(prediction_bp)
 
+    from app.routes.profile import profile_bp
+    app.register_blueprint(profile_bp)
+
     # Create database tables
     with app.app_context():
         from app.models.user import User
         from app.models.prediction_history import PredictionHistory
 
         db.create_all()
+
+        # Lightweight migration: db.create_all() only creates missing
+        # tables, it won't add new columns to a table that already
+        # exists (e.g. the pre-existing mediverse.db). Add any columns
+        # the current User model expects but the DB table doesn't have.
+        from sqlalchemy import inspect, text
+
+        inspector = inspect(db.engine)
+        existing_columns = {
+            col["name"] for col in inspector.get_columns("user")
+        }
+
+        expected_columns = {
+            "profile_photo": "VARCHAR(255)",
+            "phone": "VARCHAR(30)",
+            "bio": "TEXT",
+            "language": "VARCHAR(10) DEFAULT 'en'",
+        }
+
+        with db.engine.connect() as conn:
+            for col_name, col_type in expected_columns.items():
+                if col_name not in existing_columns:
+                    conn.execute(
+                        text(
+                            f"ALTER TABLE user ADD COLUMN {col_name} {col_type}"
+                        )
+                    )
+            conn.commit()
 
     return app

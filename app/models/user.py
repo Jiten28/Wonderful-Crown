@@ -29,6 +29,27 @@ class User(UserMixin, db.Model):
         default=False
     )
 
+    profile_photo = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    phone = db.Column(
+        db.String(30),
+        nullable=True
+    )
+
+    bio = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    language = db.Column(
+        db.String(10),
+        nullable=False,
+        server_default="en"
+    )
+
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -39,19 +39,6 @@
         HERO ROW — centered, text-led
 =================================== */
 
-/* ===================================
-        CURSOR-REACTIVE BACKGROUND LAYER
-        (canvas injected by cursor-effects.js)
-=================================== */
-
-.vanta-bg-layer{
-
-    position:absolute;
-    inset:0;
-    z-index:1;
-
-}
-
 .hero-row{
 
     position:relative;

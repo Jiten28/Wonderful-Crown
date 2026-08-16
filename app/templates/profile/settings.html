@@ -1,0 +1,80 @@
+{% extends "layout/base.html" %} {% block css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/profile.css') }}"
+/>
+{% endblock %} {% block title %}Settings{% endblock %} {% block content %}
+
+<section class="dashboard-hero">
+  <div class="container">
+    <h1>Settings</h1>
+    <p>Update your profile details and preferences.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="dashboard-card prediction-form">
+          <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4 profile-photo-field">
+              {% if current_user.profile_photo %}
+              <img
+                src="{{ url_for('static', filename=current_user.profile_photo) }}"
+                class="profile-photo"
+                alt="{{ current_user.name }}"
+              />
+              {% else %}
+              <div class="profile-photo profile-photo-initials">
+                {{ current_user.name[:2].upper() }}
+              </div>
+              {% endif %}
+
+              <div>
+                {{ form.photo.label(class="form-label d-block") }} {{
+                form.photo(class="form-control") }}
+                {% for error in form.photo.errors %}
+                <small class="text-danger d-block mt-1">{{ error }}</small>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.name.label(class="form-label") }} {{
+              form.name(class="form-control") }}
+              {% for error in form.name.errors %}
+              <small class="text-danger d-block mt-1">{{ error }}</small>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              {{ form.phone.label(class="form-label") }} {{
+              form.phone(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.bio.label(class="form-label") }} {{
+              form.bio(class="form-control", rows="4") }}
+            </div>
+
+            <div class="mb-4">
+              {{ form.language.label(class="form-label") }} {{
+              form.language(class="form-control") }}
+            </div>
+
+            {{ form.submit(class="btn btn-primary-custom") }}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
