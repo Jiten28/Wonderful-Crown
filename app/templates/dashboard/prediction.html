@@ -1,124 +1,158 @@
-{% extends "layout/base.html" %} {% block title %}AI Disease Prediction{%
-endblock %} {% block content %}
+{% extends "layout/base.html" %} {% block css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}"
+/>
+{% endblock %} {% block title %}AI Disease Prediction{% endblock %} {% block
+content %}
 
-<section class="container py-5 mt-5">
-  <div class="text-center mb-5">
-    <h1 class="fw-bold">AI Disease Prediction</h1>
-    <p class="text-muted">
-      Select your symptoms and let Wonderful Crown predict the disease.
-    </p>
+<section class="dashboard-hero">
+  <div class="container">
+    <h1>AI Disease Prediction</h1>
+    <p>Select your symptoms and let Wonderful Crown predict the disease.</p>
   </div>
+</section>
 
-  <div class="card shadow-lg border-0 p-4">
-    <form method="POST">
-      <label class="form-label fw-semibold"> Select Symptoms </label>
+<section>
+  <div class="container">
+    <div class="dashboard-card prediction-form">
+      <form method="POST">
+        <label class="form-label fw-semibold"> Select Symptoms </label>
 
-      <select class="form-select symptom-select" name="symptoms" multiple>
-        {% for symptom in symptoms %}
-        <option value="{{ symptom }}">
-          {{ symptom.replace("_", " ").title() }}
-        </option>
-        {% endfor %}
-      </select>
+        <select class="form-select symptom-select" name="symptoms" multiple>
+          {% for symptom in symptoms %}
+          <option value="{{ symptom }}">
+            {{ symptom.replace("_", " ").title() }}
+          </option>
+          {% endfor %}
+        </select>
 
-      <button type="submit" class="btn btn-primary-custom mt-4">
-        Predict Disease
-      </button>
-    </form>
-  </div>
+        <button type="submit" class="btn btn-primary-custom mt-4">
+          Predict Disease
+        </button>
+      </form>
+    </div>
 
-  {% if result %}
+    {% if result %}
 
-  <div class="card shadow border-0 mt-5">
-    <div class="card-body">
-      <h3 class="text-success">
+    <div class="disease-result-card">
+      <div class="disease-result-name">
         {{ result.disease.replace("_", " ").title() }}
-      </h3>
+      </div>
 
-      <h5 class="mt-3">Confidence : {{ result.confidence }}%</h5>
+      <div class="confidence-label">Confidence: {{ result.confidence }}%</div>
 
-      <div class="progress mt-2" style="height: 25px">
+      <div class="confidence-bar-track">
         <div
-          class="progress-bar bg-success"
-          role="progressbar"
+          class="confidence-bar-fill"
           style="width: {{ result.confidence }}%;"
         >
           {{ result.confidence }}%
         </div>
       </div>
 
-      <hr />
-
-      <h4>Description</h4>
-      <p>{{ result.recommendation.description }}</p>
-
-      <hr />
-
-      <h4>Medicines</h4>
-
-      {% if result.recommendation.medicines %}
-      <ul>
-        {% for med in result.recommendation.medicines %}
-        <li>{{ med }}</li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No medicines available.</p>
+      {% if result.recommendation.description %}
+      <p class="mt-4 mb-0">{{ result.recommendation.description }}</p>
       {% endif %}
-
-      <hr />
-
-      <h4>Diet Recommendations</h4>
-
-      {% if result.recommendation.diet %}
-      <ul>
-        {% for item in result.recommendation.diet %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No diet recommendations available.</p>
-      {% endif %}
-
-      <hr />
-
-      <h4>Precautions</h4>
-
-      {% if result.recommendation.precautions %}
-      <ul>
-        {% for item in result.recommendation.precautions %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No precautions available.</p>
-      {% endif %}
-
-      <hr />
-
-      <h4>Workout Suggestions</h4>
-
-      {% if result.recommendation.workout %}
-      <ul>
-        {% for item in result.recommendation.workout %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No workout suggestions available.</p>
-      {% endif %}
-
-      <hr />
-
-      <h4>Recommended Doctor</h4>
-      <p>{{ result.recommendation.doctor }}</p>
     </div>
-  </div>
 
-  {% endif %}
+    <div class="row g-4 mt-1">
+      <div class="col-lg-6">
+        <div class="result-card">
+          <div class="result-card-heading">
+            <div class="result-card-icon"><i class="bi bi-capsule"></i></div>
+            <h4>Medicines</h4>
+          </div>
+
+          {% if result.recommendation.medicines %}
+          <ul class="result-list">
+            {% for med in result.recommendation.medicines %}
+            <li><i class="bi bi-check-circle-fill"></i> {{ med }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="result-empty">No medicines available.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="result-card">
+          <div class="result-card-heading">
+            <div class="result-card-icon"><i class="bi bi-basket"></i></div>
+            <h4>Diet Recommendations</h4>
+          </div>
+
+          {% if result.recommendation.diet %}
+          <ul class="result-list">
+            {% for item in result.recommendation.diet %}
+            <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="result-empty">No diet recommendations available.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="result-card">
+          <div class="result-card-heading">
+            <div class="result-card-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h4>Precautions</h4>
+          </div>
+
+          {% if result.recommendation.precautions %}
+          <ul class="result-list">
+            {% for item in result.recommendation.precautions %}
+            <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="result-empty">No precautions available.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="result-card">
+          <div class="result-card-heading">
+            <div class="result-card-icon">
+              <i class="bi bi-bicycle"></i>
+            </div>
+            <h4>Workout Suggestions</h4>
+          </div>
+
+          {% if result.recommendation.workout %}
+          <ul class="result-list">
+            {% for item in result.recommendation.workout %}
+            <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="result-empty">No workout suggestions available.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    {% if result.recommendation.doctor %}
+    <div class="doctor-result-card">
+      <div class="result-card-icon">
+        <i class="bi bi-person-badge"></i>
+      </div>
+      <div>
+        <h4>Recommended Doctor</h4>
+        <p>{{ result.recommendation.doctor }}</p>
+      </div>
+    </div>
+    {% endif %} {% endif %}
+  </div>
 </section>
 
-{% block js %}
+{% endblock %} {% block js %}
 
 <script>
   $(document).ready(function () {
@@ -130,4 +164,4 @@ endblock %} {% block content %}
   });
 </script>
 
-{% endblock %} {% endblock %}
+{% endblock %}

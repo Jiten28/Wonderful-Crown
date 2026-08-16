@@ -401,3 +401,141 @@
     background:var(--bg);
 
 }
+/* ==========================
+   PREDICTION RESULTS
+========================== */
+
+.result-card{
+    background:var(--surface);
+    padding:var(--space-card);
+    border-radius:var(--radius-md);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    height:100%;
+}
+
+.result-card-heading{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.result-card-icon{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--bg-tint);
+    border:1px solid var(--border-soft);
+    border-radius:50%;
+    font-size:1.15rem;
+    color:var(--primary);
+}
+
+.result-card-heading h4{
+    margin:0;
+    font-size:1.15rem;
+}
+
+.result-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.result-list li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px solid var(--border-soft);
+    color:var(--text);
+}
+
+.result-list li:last-child{
+    border-bottom:none;
+}
+
+.result-list li i{
+    color:var(--primary);
+    font-size:.95rem;
+    margin-top:3px;
+}
+
+.result-empty{
+    color:var(--text-light);
+    font-size:.92rem;
+}
+
+.disease-result-card{
+    background:var(--surface);
+    padding:var(--space-card);
+    border-radius:var(--radius-md);
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    margin-top:32px;
+}
+
+.disease-result-name{
+    font-family:var(--font-display);
+    font-weight:600;
+    color:var(--primary);
+    font-size:1.8rem;
+    margin-bottom:6px;
+}
+
+.confidence-label{
+    color:var(--text-light);
+    font-weight:600;
+    font-size:.9rem;
+    margin-bottom:10px;
+}
+
+.confidence-bar-track{
+    height:22px;
+    border-radius:var(--radius-pill);
+    background:var(--bg-tint);
+    overflow:hidden;
+}
+
+.confidence-bar-fill{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding-right:12px;
+    border-radius:var(--radius-pill);
+    background:linear-gradient(90deg,var(--btn-grad-1),var(--btn-grad-2));
+    color:#fff;
+    font-size:.72rem;
+    font-weight:700;
+    transition:width .6s ease;
+}
+
+.doctor-result-card{
+    background:linear-gradient(135deg,var(--btn-grad-1),var(--btn-grad-2));
+    color:#fff;
+    padding:var(--space-card);
+    border-radius:var(--radius-md);
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-top:24px;
+}
+
+.doctor-result-card .result-card-icon{
+    background:rgba(255,255,255,.14);
+    border-color:rgba(255,255,255,.3);
+    color:#fff;
+}
+
+.doctor-result-card h4{
+    margin:0 0 4px;
+    color:#fff;
+}
+
+.doctor-result-card p{
+    margin:0;
+    color:rgba(255,255,255,.85);
+}

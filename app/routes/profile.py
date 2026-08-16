@@ -8,6 +8,7 @@ from flask import (
     url_for,
     flash,
     current_app,
+    request,
 )
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -23,12 +24,25 @@ UPLOAD_SUBDIR = os.path.join("uploads", "avatars")
 @profile_bp.route("/profile")
 @login_required
 def view_profile():
-    return render_template("profile/view.html")
+    form = SettingsForm(obj=current_user)
+    form.name.data = current_user.name
+    form.phone.data = current_user.phone
+    form.bio.data = current_user.bio
+    form.language.data = current_user.language or "en"
+
+    open_edit = request.args.get("edit") == "1"
+
+    return render_template("profile/view.html", form=form, open_edit=open_edit)
 
 
 @profile_bp.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
+
+    # Settings no longer has its own page — it's an edit toggle on
+    # /profile now. A GET here (e.g. an old bookmark) just goes there.
+    if request.method == "GET":
+        return redirect(url_for("profile.view_profile"))
 
     form = SettingsForm(obj=current_user)
 
@@ -60,15 +74,10 @@ def settings():
         db.session.commit()
 
         flash("Your changes have been saved.", "success")
-        return redirect(url_for("profile.settings"))
+        return redirect(url_for("profile.view_profile"))
 
-    elif form.errors and form.is_submitted():
-        flash("Please correct the errors below.", "danger")
-
-    if not form.is_submitted():
-        form.name.data = current_user.name
-        form.phone.data = current_user.phone
-        form.bio.data = current_user.bio
-        form.language.data = current_user.language or "en"
-
-    return render_template("profile/settings.html", form=form)
+    # Validation failed — field-level errors don't survive a redirect,
+    # so flash a general message and reopen the edit panel so the user
+    # can see and retry the form.
+    flash("Please correct the errors below.", "danger")
+    return redirect(url_for("profile.view_profile", edit="1"))

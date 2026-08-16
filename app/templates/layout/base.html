@@ -104,33 +104,38 @@
   </head>
 
   <body>
-    {% include 'layout/navbar.html' %}
+    <div class="particle-zone">
+      <canvas id="particleCanvas"></canvas>
 
-    <!-- Flash Messages -->
+      {% include 'layout/navbar.html' %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
+      <!-- Flash Messages -->
 
-    <div class="container mt-5 pt-5">
-      {% for category, message in messages %}
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
 
-      <div
-        class="alert alert-{{ category }} alert-dismissible fade show shadow-sm"
-      >
-        {{ message }}
+      <div class="container mt-5 pt-5">
+        {% for category, message in messages %}
 
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-        ></button>
+        <div
+          class="alert alert-{{ category }} alert-dismissible fade show shadow-sm"
+        >
+          {{ message }}
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+          ></button>
+        </div>
+
+        {% endfor %}
       </div>
 
-      {% endfor %}
+      {% endif %} {% endwith %} {% block content %} {% endblock %} {% include
+      'layout/footer.html' %}
     </div>
-
-    {% endif %} {% endwith %} {% block content %} {% endblock %} {% include
-    'layout/footer.html' %}
+    <!-- /.particle-zone -->
 
     <!-- Bootstrap -->
 

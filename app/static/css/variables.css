@@ -1,40 +1,36 @@
 :root{
 
-    /* ===== Brand — Deep Clinical Navy ===== */
+    /* ===== Brand — Slate & Copper ===== */
 
-    --primary:#12B3A8;
-    --primary-dark:#0B8F86;
-    --primary-light:#4DD8CC;
+    --primary:#1B7A8C;
+    --primary-dark:#145F6E;
+    --primary-light:#4FB6C9;
 
-    --secondary:#0B4F5C;
-    --secondary-light:#3A7986;
+    --secondary:#1B2D3E;
+    --secondary-light:#2A4256;
 
-    --accent:#22C55E;
+    --accent:#A8663E;
 
-    /* ===== Navy scale (surfaces, dark sections) ===== */
+    /* ===== Surfaces ===== */
 
-    --navy-950:#081428;
-    --navy-900:#0B1F38;
-    --navy-800:#0F2A44;
-
-    --dark:#081428;
-    --text:#16202B;
-    --text-light:#5B6672;
+    --dark:#0A1420;
+    --text:#16232E;
+    --text-light:#5C6570;
 
     --white:#FFFFFF;
-    --bg:#F7FAFA;
-    --bg-tint:#EAF3F3;
+    --bg:#F7F5F1;
+    --bg-tint:#EFEAE2;
 
     --surface:#FFFFFF;
-    --surface-glass:rgba(255,255,255,.9);
-    --border-soft:rgba(11,79,92,.12);
+    --surface-glass:rgba(255,255,255,.78);
+    --border-soft:rgba(27,45,62,.12);
 
     --glass:rgba(255,255,255,.65);
     --glass-dark:rgba(255,255,255,.06);
     --glass-dark-border:rgba(255,255,255,.14);
 
-    --glow-primary:rgba(18,179,168,.20);
-    --glow-secondary:rgba(11,79,92,.5);
+    --glow-primary:rgba(27,122,140,.20);
+    --glow-secondary:rgba(27,45,62,.5);
 
     /* ===== Typography ===== */
 
@@ -42,9 +38,10 @@
     --font-body:'Inter',sans-serif;
     --font-mono:'IBM Plex Mono',monospace;
 
-    /* Button/gradient-on-white-text pair — verified >=4.5:1 with #fff */
-    --btn-grad-1:#3A7986;
-    --btn-grad-2:#0B4F5C;
+    /* Button/gradient-on-white-text pair — verified >=4.5:1 with #fff.
+       primary 4.99:1, primary-dark 7.26:1 */
+    --btn-grad-1:var(--primary);
+    --btn-grad-2:var(--primary-dark);
 
     /* ===== Radius ===== */
 
@@ -58,11 +55,11 @@
 
     /* ===== Shadow ===== */
 
-    --shadow-sm:0 10px 25px rgba(8,20,40,.08);
+    --shadow-sm:0 10px 25px rgba(10,20,32,.08);
 
-    --shadow-md:0 15px 45px rgba(11,79,92,.18);
+    --shadow-md:0 15px 45px rgba(27,45,62,.18);
 
-    --shadow-lg:0 30px 80px rgba(8,20,40,.24);
+    --shadow-lg:0 30px 80px rgba(10,20,32,.24);
 
     /* ===== Transition ===== */
 
@@ -79,32 +76,36 @@
 
 [data-theme="dark"]{
 
-    --primary:#2FE6D6;
-    --primary-dark:#12B3A8;
-    --primary-light:#7FF0E4;
+    --primary:#4FB6C9;
+    --primary-dark:#1B7A8C;
+    --primary-light:#7FCBDA;
 
-    --secondary:#3A7986;
-    --secondary-light:#5FA3B0;
+    --secondary:#2A4256;
+    --secondary-light:#3D5A70;
+
+    --accent:#B97A56;
 
     /* Button/gradient-on-white-text pair — verified >=4.5:1 with #fff in dark mode.
-       (--primary in dark mode is a bright accent teal; too light for white text.) */
-    --btn-grad-1:#12746B;
-    --btn-grad-2:#0B4F5C;
+       (--primary in dark mode is a bright accent teal, 2.37:1 alone — too light
+       for white text, so the gradient uses primary-dark/secondary instead.)
+       primary-dark 4.99:1, secondary 10.44:1 */
+    --btn-grad-1:var(--primary-dark);
+    --btn-grad-2:var(--secondary);
 
-    --text:#E9EEF1;
-    --text-light:#9DAAB3;
+    --text:#EDF3F6;
+    --text-light:#9FB0BC;
 
-    --bg:#081428;
-    --bg-tint:#0F2A44;
+    --bg:#0A1420;
+    --bg-tint:#12202E;
 
-    --surface:#0B1F38;
-    --surface-glass:rgba(15,42,68,.85);
+    --surface:#12202E;
+    --surface-glass:rgba(18,32,46,.72);
     --border-soft:rgba(255,255,255,.12);
 
     --glass:rgba(255,255,255,.06);
 
-    --glow-primary:rgba(47,230,214,.16);
-    --glow-secondary:rgba(58,121,134,.4);
+    --glow-primary:rgba(79,182,201,.16);
+    --glow-secondary:rgba(42,66,86,.4);
 
     --shadow-sm:0 10px 25px rgba(0,0,0,.35);
     --shadow-md:0 15px 45px rgba(0,0,0,.4);
@@ -114,23 +115,24 @@
 
 @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]):not([data-theme="dark"]){
-        --primary:#2FE6D6;
-        --primary-dark:#12B3A8;
-        --primary-light:#7FF0E4;
-        --secondary:#3A7986;
-        --secondary-light:#5FA3B0;
-        --btn-grad-1:#12746B;
-        --btn-grad-2:#0B4F5C;
-        --text:#E9EEF1;
-        --text-light:#9DAAB3;
-        --bg:#081428;
-        --bg-tint:#0F2A44;
-        --surface:#0B1F38;
-        --surface-glass:rgba(15,42,68,.85);
+        --primary:#4FB6C9;
+        --primary-dark:#1B7A8C;
+        --primary-light:#7FCBDA;
+        --secondary:#2A4256;
+        --secondary-light:#3D5A70;
+        --accent:#B97A56;
+        --btn-grad-1:var(--primary-dark);
+        --btn-grad-2:var(--secondary);
+        --text:#EDF3F6;
+        --text-light:#9FB0BC;
+        --bg:#0A1420;
+        --bg-tint:#12202E;
+        --surface:#12202E;
+        --surface-glass:rgba(18,32,46,.72);
         --border-soft:rgba(255,255,255,.12);
         --glass:rgba(255,255,255,.06);
-        --glow-primary:rgba(47,230,214,.16);
-        --glow-secondary:rgba(58,121,134,.4);
+        --glow-primary:rgba(79,182,201,.16);
+        --glow-secondary:rgba(42,66,86,.4);
         --shadow-sm:0 10px 25px rgba(0,0,0,.35);
         --shadow-md:0 15px 45px rgba(0,0,0,.4);
         --shadow-lg:0 30px 80px rgba(0,0,0,.5);

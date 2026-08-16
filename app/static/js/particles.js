@@ -4,14 +4,12 @@
 
    Adaptation notes vs. the reference:
    - The reference canvas is position:fixed and sized to the
-     viewport (window.innerWidth/innerHeight), because its demo
-     page is a single full-screen surface. Here the effect needs
-     to span exactly "the hero + the section below it" and stop
-     there (per the seam-fix requirement), not bleed behind every
-     section down to the footer. So the canvas is instead scoped
-     to its nearest .particle-zone ancestor: sized to that
-     wrapper's rendered box (not the viewport), and positioned
-     absolute (not fixed) so it scrolls with that wrapper.
+     viewport. Here .particle-zone is defined once in base.html,
+     wrapping navbar + content + footer on every page, and the
+     canvas is absolutely positioned to that wrapper's full
+     rendered height instead — so it's genuinely site-wide with
+     no per-template duplication and no seam, while still not
+     requiring position:fixed.
    - Mouse coordinates are converted from viewport-relative
      (event.clientX/Y) to canvas-local via the canvas's own
      getBoundingClientRect(), recomputed on every move so it
@@ -19,6 +17,16 @@
    - Colors are read live from the active theme's CSS custom
      properties instead of a hardcoded hex array, so particles
      match light/dark mode automatically.
+   - Sizing waits for document.fonts.ready before the first
+     createParticles() call, and a ResizeObserver on .particle-zone
+     supplements window.resize — fixes particles spawning clustered
+     top-left on load (was measuring the zone before web fonts
+     finished loading and the layout settled).
+   - A page can opt into a lower-density variant for content-heavy
+     screens (dashboard, prediction results, analytics tables) by
+     adding data-particle-density="low" to <body>, so the effect
+     doesn't compete with reading data. This is a judgment call,
+     not explicitly specified — flagging it as such.
    - Everything else (drift, edge bounce, ~130px repulsion with
      proximity-scaled force, smooth easing back, no connecting
      lines) is unchanged from the reference behavior.
@@ -42,6 +50,7 @@
   }
 
   var isMobile = window.matchMedia("(max-width: 768px)").matches;
+  var lowDensity = document.body.getAttribute("data-particle-density") === "low";
 
   var ctx = canvas.getContext("2d");
 
@@ -75,6 +84,16 @@
   }
 
   window.addEventListener("resize", resizeCanvas);
+
+  // ResizeObserver catches layout shifts window.resize alone would
+  // miss — e.g. content pushing .particle-zone taller after images/
+  // fonts settle, or a flash message appearing/dismissing.
+  if (typeof ResizeObserver !== "undefined") {
+    var resizeObserver = new ResizeObserver(function () {
+      resizeCanvas();
+    });
+    resizeObserver.observe(zone);
+  }
 
   // ------------------------------------------------------------
   // MOUSE — converted to canvas-local coordinates.
@@ -112,8 +131,17 @@
     // Fewer particles on mobile — cursor interaction isn't
     // meaningful there anyway (see guard below), so this just
     // keeps ambient motion cheap on small/low-power screens.
-    var divisor = isMobile ? 32000 : 22000;
-    var cap = isMobile ? 28 : 65;
+    var divisor = isMobile ? 16000 : 11000;
+    var cap = isMobile ? 50 : 140;
+
+    // Content-heavy pages (dashboard, prediction results, analytics
+    // tables) opt into a lighter variant via
+    // <body data-particle-density="low"> so the effect stays
+    // ambient rather than competing with data on screen.
+    if (lowDensity) {
+      divisor *= 2.2;
+      cap = Math.round(cap * 0.4);
+    }
 
     var count = Math.min(
       cap,
@@ -128,7 +156,7 @@
         baseY: 0,
         size: Math.random() * 2.5 + 2,
         color: colors[Math.floor(Math.random() * colors.length)],
-        opacity: Math.random() * 0.35 + 0.45,
+        opacity: (Math.random() * 0.35 + 0.45) * (lowDensity ? 0.5 : 1),
         vx: (Math.random() - 0.5) * 0.25,
         vy: (Math.random() - 0.5) * 0.25,
         offsetX: 0,
@@ -232,6 +260,20 @@
     });
   }
 
-  resizeCanvas();
-  animate();
+  // Wait for web fonts to finish loading before the FIRST sizing
+  // pass — otherwise getBoundingClientRect() measures the zone
+  // before layout has settled (fonts not yet swapped in can change
+  // text height/wrapping), producing a smaller/wrong box: particles
+  // spawn clustered in that smaller area, then visibly jump/spread
+  // once a later resize corrects it. document.fonts.ready resolves
+  // once all fonts are loaded and the current frame is stable.
+  var fontsReady =
+    document.fonts && document.fonts.ready
+      ? document.fonts.ready
+      : Promise.resolve();
+
+  fontsReady.then(function () {
+    resizeCanvas();
+    animate();
+  });
 })();

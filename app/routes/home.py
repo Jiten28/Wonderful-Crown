@@ -239,20 +239,20 @@ def export_pdf():
 
         # --- Letterhead ---
         canvas.setFont("Helvetica-Bold", 16)
-        canvas.setFillColor(colors.HexColor("#0B4F5C"))
+        canvas.setFillColor(colors.HexColor("#1B2D3E"))
         canvas.drawString(
             0.75 * inch, page_height - 0.65 * inch, "Wonderful Crown"
         )
 
         canvas.setFont("Helvetica", 8)
-        canvas.setFillColor(colors.HexColor("#5B6672"))
+        canvas.setFillColor(colors.HexColor("#5C6570"))
         canvas.drawString(
             0.75 * inch,
             page_height - 0.82 * inch,
             "AI-Assisted Healthcare Recommendation System",
         )
 
-        canvas.setStrokeColor(colors.HexColor("#0B4F5C"))
+        canvas.setStrokeColor(colors.HexColor("#1B2D3E"))
         canvas.setLineWidth(1)
         canvas.line(
             0.75 * inch,
@@ -263,7 +263,7 @@ def export_pdf():
 
         # --- Footer: page number ---
         canvas.setFont("Helvetica", 8)
-        canvas.setFillColor(colors.HexColor("#5B6672"))
+        canvas.setFillColor(colors.HexColor("#5C6570"))
         canvas.drawRightString(
             page_width - 0.75 * inch, 0.5 * inch, f"Page {doc.page}"
         )
@@ -276,7 +276,7 @@ def export_pdf():
         # --- Watermark: diagonal, low-opacity, behind content ---
         canvas.saveState()
         canvas.setFont("Helvetica-Bold", 60)
-        canvas.setFillColor(colors.HexColor("#12B3A8"))
+        canvas.setFillColor(colors.HexColor("#1B7A8C"))
         canvas.setFillAlpha(0.06)
         canvas.translate(page_width / 2, page_height / 2)
         canvas.rotate(45)
@@ -329,7 +329,7 @@ def export_pdf():
 
     table.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0B4F5C")),
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1B2D3E")),
             ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
             ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
             ("BOTTOMPADDING", (0, 0), (-1, 0), 12),

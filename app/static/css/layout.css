@@ -22,13 +22,13 @@ body::before{
 
 /* ==========================
    PARTICLE CANVAS
-   (particles.js — canvas positioning moved here per instruction.
-   .particle-zone wraps the section(s) the effect should span;
-   the canvas is absolutely positioned to cover that wrapper's
-   full height as ONE continuous element, so there's no seam
-   between sections. Scoped per-page via .particle-zone usage,
-   not global — unlike the reference's position:fixed, which
-   would bleed behind every section down to the footer here.)
+   (particles.js — canvas positioning lives here.
+   .particle-zone is defined ONCE in base.html, wrapping the
+   navbar + content + footer of every page, so the canvas spans
+   the full rendered height of whichever page loads with no
+   per-template duplication and no seam. Site-wide by default;
+   see .particle-density-low below for the content-heavy-page
+   opt-in variant.)
 ========================== */
 
 .particle-zone{
@@ -92,9 +92,11 @@ section{
 
 .btn-login{
 
-    background:#fff;
+    background:transparent;
 
-    border:1px solid #ddd;
+    color:var(--text);
+
+    border:1.5px solid var(--border-soft);
 
     border-radius:var(--radius-pill);
 
@@ -106,7 +108,8 @@ section{
 
 .btn-login:hover{
 
-    box-shadow:var(--shadow-sm);
+    background:var(--bg-tint);
+    border-color:var(--primary);
 
 }
 

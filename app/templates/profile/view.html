@@ -71,17 +71,115 @@
           </div>
           {% endif %}
 
-          <a
-            href="{{ url_for('profile.settings') }}"
+          <button
+            type="button"
+            id="profileEditToggle"
             class="btn btn-primary-custom mt-4"
           >
             <i class="bi bi-pencil-square me-2"></i>
-            Edit Profile
-          </a>
+            <span id="profileEditToggleLabel">Edit Profile</span>
+          </button>
+        </div>
+
+        <div
+          class="dashboard-card prediction-form profile-edit-panel mt-4"
+          id="profileEditPanel"
+          style="display: {{ 'block' if open_edit else 'none' }};"
+        >
+          <form method="POST" action="{{ url_for('profile.settings') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-4 profile-photo-field">
+              {% if current_user.profile_photo %}
+              <img
+                src="{{ url_for('static', filename=current_user.profile_photo) }}"
+                class="profile-photo"
+                alt="{{ current_user.name }}"
+              />
+              {% else %}
+              <div class="profile-photo profile-photo-initials">
+                {{ current_user.name[:2].upper() }}
+              </div>
+              {% endif %}
+
+              <div>
+                {{ form.photo.label(class="form-label d-block") }} {{
+                form.photo(class="form-control") }}
+                {% for error in form.photo.errors %}
+                <small class="text-danger d-block mt-1">{{ error }}</small>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              {{ form.name.label(class="form-label") }} {{
+              form.name(class="form-control") }}
+              {% for error in form.name.errors %}
+              <small class="text-danger d-block mt-1">{{ error }}</small>
+              {% endfor %}
+            </div>
+
+            <div class="mb-3">
+              {{ form.phone.label(class="form-label") }} {{
+              form.phone(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.bio.label(class="form-label") }} {{
+              form.bio(class="form-control", rows="4") }}
+            </div>
+
+            <div class="mb-4">
+              {{ form.language.label(class="form-label") }} {{
+              form.language(class="form-control") }}
+            </div>
+
+            {{ form.submit(class="btn btn-primary-custom") }}
+            <button type="button" id="profileEditCancel" class="btn btn-login">
+              Cancel
+            </button>
+          </form>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+{% endblock %} {% block js %}
+<script>
+  (function () {
+    var toggleBtn = document.getElementById("profileEditToggle");
+    var cancelBtn = document.getElementById("profileEditCancel");
+    var panel = document.getElementById("profileEditPanel");
+    var label = document.getElementById("profileEditToggleLabel");
+
+    function isOpen() {
+      return panel.style.display !== "none";
+    }
+
+    function setOpen(open) {
+      panel.style.display = open ? "block" : "none";
+      label.textContent = open ? "Hide Edit Form" : "Edit Profile";
+      if (open) {
+        panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        setOpen(!isOpen());
+      });
+    }
+
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", function () {
+        setOpen(false);
+      });
+    }
+
+    {% if open_edit %}
+    setOpen(true);
+    {% endif %}
+  })();
+</script>
 {% endblock %}
