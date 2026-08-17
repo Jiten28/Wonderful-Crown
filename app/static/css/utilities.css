@@ -2,7 +2,7 @@
 
     background:var(--surface-glass);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(21px);
 
     border:1px solid var(--border-soft);
 

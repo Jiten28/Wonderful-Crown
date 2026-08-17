@@ -22,7 +22,7 @@
 
     background:var(--surface-glass);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(24px);
 
     border-radius:var(--radius-md);
 

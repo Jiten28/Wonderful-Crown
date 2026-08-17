@@ -83,7 +83,35 @@
     createParticles();
   }
 
-  window.addEventListener("resize", resizeCanvas);
+  // --- TEMPORARY DEBUG LOGGING (item 5 — seam investigation) ---
+  // Compares the canvas's internal drawing buffer height against the
+  // .particle-zone wrapper's actual current rendered height. If these
+  // ever diverge, particles are being placed/bounded against a stale
+  // size — that's the seam. Remove once the cause is confirmed.
+  function logSeamDebug(source) {
+    var liveRect = zone.getBoundingClientRect();
+    var diff = liveRect.height - canvas.height;
+    console.log(
+      "[particle-seam-debug] " + source +
+      " | canvas.height=" + canvas.height +
+      " zone.rect.height=" + liveRect.height.toFixed(1) +
+      " diff=" + diff.toFixed(1) +
+      (Math.abs(diff) > 1 ? "  <-- MISMATCH" : "")
+    );
+  }
+
+  window.addEventListener("resize", function () {
+    resizeCanvas();
+    logSeamDebug("window resize (after resizeCanvas)");
+  });
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      logSeamDebug("scroll");
+    },
+    { passive: true }
+  );
 
   // ResizeObserver catches layout shifts window.resize alone would
   // miss — e.g. content pushing .particle-zone taller after images/
@@ -91,6 +119,7 @@
   if (typeof ResizeObserver !== "undefined") {
     var resizeObserver = new ResizeObserver(function () {
       resizeCanvas();
+      logSeamDebug("ResizeObserver (after resizeCanvas)");
     });
     resizeObserver.observe(zone);
   }
@@ -139,8 +168,8 @@
     // <body data-particle-density="low"> so the effect stays
     // ambient rather than competing with data on screen.
     if (lowDensity) {
-      divisor *= 2.2;
-      cap = Math.round(cap * 0.4);
+      divisor *= 3;
+      cap = Math.round(cap * 0.3);
     }
 
     var count = Math.min(
@@ -148,24 +177,47 @@
       Math.floor((canvas.width * canvas.height) / divisor)
     );
 
+    // Particles read as visually louder in light mode — a saturated
+    // dot has more contrast against a light/white glass card than
+    // the same dot does against a dark one. Knock opacity down
+    // further specifically for light theme, on top of any
+    // low-density reduction.
+    var isLight =
+      document.documentElement.getAttribute("data-theme") === "light";
+    var themeOpacityMultiplier = isLight ? 0.55 : 1;
+
     for (let i = 0; i < count; i++) {
+      var startX = Math.random() * canvas.width;
+      var startY = Math.random() * canvas.height;
+
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        baseX: 0,
-        baseY: 0,
+        x: startX,
+        y: startY,
+        baseX: startX,
+        baseY: startY,
         size: Math.random() * 2.5 + 2,
         color: colors[Math.floor(Math.random() * colors.length)],
-        opacity: (Math.random() * 0.35 + 0.45) * (lowDensity ? 0.5 : 1),
+        opacity:
+          (Math.random() * 0.35 + 0.45) *
+          themeOpacityMultiplier *
+          (lowDensity ? 0.5 : 1),
         vx: (Math.random() - 0.5) * 0.25,
         vy: (Math.random() - 0.5) * 0.25,
-        offsetX: 0,
-        offsetY: 0,
+        // These are the easing logic's running target in
+        // updateParticles() — a particle "chases" offsetX/offsetY
+        // every frame. Initializing them to 0 (the canvas origin)
+        // instead of the particle's own starting position was the
+        // actual cause of particles visibly traveling in from the
+        // top-left on every createParticles() call (page load,
+        // resize, theme toggle): each particle spent its first
+        // several frames being pulled toward (0,0) before the
+        // easing caught up to where it actually belonged. Starting
+        // both at the particle's own position means there's nothing
+        // to visibly travel from — it's already "at rest" on the
+        // very first drawn frame.
+        offsetX: startX,
+        offsetY: startY,
       });
-
-      var p = particles[particles.length - 1];
-      p.baseX = p.x;
-      p.baseY = p.y;
     }
   }
 
@@ -253,9 +305,7 @@
     toggle.addEventListener("click", function () {
       setTimeout(function () {
         colors = readPaletteColors();
-        particles.forEach(function (p) {
-          p.color = colors[Math.floor(Math.random() * colors.length)];
-        });
+        createParticles();
       }, 50);
     });
   }
@@ -274,6 +324,7 @@
 
   fontsReady.then(function () {
     resizeCanvas();
+    logSeamDebug("initial load (after fonts.ready)");
     animate();
   });
 })();

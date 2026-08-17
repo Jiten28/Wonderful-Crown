@@ -103,7 +103,7 @@
     {% block css %} {% endblock %}
   </head>
 
-  <body>
+  <body {% block body_attrs %}{% endblock %}>
     <div class="particle-zone">
       <canvas id="particleCanvas"></canvas>
 

@@ -102,7 +102,7 @@
     align-items:center;
 
     background:var(--surface-glass);
-    backdrop-filter:blur(16px);
+    backdrop-filter:blur(22px);
     border:1px solid var(--border-soft);
     border-radius:var(--radius-md);
     padding:22px 34px;
@@ -371,7 +371,7 @@
 
     background:var(--surface-glass);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter:blur(21px);
 
     border:1px solid rgba(11,79,92,.10);
 

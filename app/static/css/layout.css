@@ -121,7 +121,7 @@ section{
 
     background:var(--surface-glass);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(24px);
 
     transition:.35s;
 
@@ -197,6 +197,8 @@ section{
 
     font-size:1.3rem;
 
+    color:var(--text);
+
 }
 
 /* ==========================
@@ -227,6 +229,8 @@ footer{
 
     background:var(--surface);
 
+    color:var(--text);
+
     border:1px solid var(--border-soft);
 
     border-radius:var(--radius-pill);
@@ -240,6 +244,7 @@ footer{
 .user-dropdown:hover{
 
     background:var(--surface);
+    color:var(--text);
 
 }
 
@@ -327,6 +332,43 @@ footer{
 
 }
 
+.dropdown-header-name{
+
+    color:var(--text);
+
+}
+
+.dropdown-header-email{
+
+    color:var(--text-light);
+
+}
+
+/* ==========================
+   NAVBAR TOGGLER (hamburger)
+   Bootstrap's icon is a fixed-color SVG background-image,
+   not theme-aware — dark strokes disappear on a dark navbar
+   in dark mode. Override with theme-matched SVGs.
+========================== */
+
+.navbar-toggler{
+
+    border-color:var(--border-soft);
+
+}
+
+.navbar-toggler-icon{
+
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2030%2030%27%3E%3Cpath%20stroke%3D%27%2316232E%27%20stroke-linecap%3D%27round%27%20stroke-miterlimit%3D%2710%27%20stroke-width%3D%272%27%20d%3D%27M4%207h22M4%2015h22M4%2023h22%27/%3E%3C/svg%3E");
+
+}
+
+[data-theme="dark"] .navbar-toggler-icon{
+
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2030%2030%27%3E%3Cpath%20stroke%3D%27%23EDF3F6%27%20stroke-linecap%3D%27round%27%20stroke-miterlimit%3D%2710%27%20stroke-width%3D%272%27%20d%3D%27M4%207h22M4%2015h22M4%2023h22%27/%3E%3C/svg%3E");
+
+}
+
 .dropdown-item:hover{
 
     background:var(--bg-tint);
@@ -344,6 +386,8 @@ footer{
     position:relative;
 
     font-weight:500;
+
+    color:var(--text);
 
     transition:.3s;
 

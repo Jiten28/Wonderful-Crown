@@ -62,7 +62,7 @@
 
     background:var(--surface-glass);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(24px);
 
     border-radius:var(--radius-md);
 
@@ -174,7 +174,11 @@
 
 .chart-card{
 
-    background:var(--surface);
+    background:var(--surface-glass);
+
+    backdrop-filter:blur(21px);
+
+    border:1px solid var(--border-soft);
 
     border-radius:var(--radius-md);
 
@@ -258,7 +262,7 @@
 
 .doctor-card{
     background:var(--surface-glass);
-    backdrop-filter:blur(14px);
+    backdrop-filter:blur(20px);
     border-radius:var(--radius-md);
     padding:var(--space-card);
     text-align:center;
@@ -538,4 +542,127 @@
 .doctor-result-card p{
     margin:0;
     color:rgba(255,255,255,.85);
+}
+
+/* ==========================
+   SELECT2 THEMING
+   Select2's dropdown panel is appended to <body> when open (not
+   nested inside .prediction-form), so these need to be global
+   overrides, not scoped — the library ships with zero theme-aware
+   styling, it was rendering entirely in its own hardcoded defaults.
+========================== */
+
+.select2-container--default .select2-selection--multiple{
+
+    background:var(--surface);
+    border:1px solid var(--border-soft) !important;
+    border-radius:var(--radius-sm) !important;
+    min-height:52px;
+    padding:6px;
+
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+
+    border-color:var(--primary) !important;
+
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered{
+
+    color:var(--text);
+
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+
+    background:var(--bg-tint);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-sm);
+    color:var(--text);
+    padding:4px 8px;
+
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+
+    color:var(--text-light);
+    border-right:1px solid var(--border-soft);
+    margin-right:6px;
+
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover{
+
+    color:var(--primary);
+    background:transparent;
+
+}
+
+.select2-container--default .select2-search--inline .select2-search__field{
+
+    color:var(--text);
+
+}
+
+/* Dropdown panel — appended to <body>, needs to be global */
+
+.select2-dropdown{
+
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-sm);
+    box-shadow:var(--shadow-md);
+    overflow:hidden;
+
+}
+
+.select2-search--dropdown{
+
+    background:var(--surface);
+    padding:8px;
+
+}
+
+.select2-search--dropdown .select2-search__field{
+
+    background:var(--bg-tint);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-sm);
+    color:var(--text);
+    padding:8px 10px;
+
+}
+
+.select2-results__options{
+
+    background:var(--surface);
+
+}
+
+.select2-results__option{
+
+    color:var(--text);
+    padding:10px 14px;
+
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected]{
+
+    background:var(--primary);
+    color:#fff;
+
+}
+
+.select2-container--default .select2-results__option[aria-selected=true]{
+
+    background:var(--bg-tint);
+    color:var(--text-light);
+
+}
+
+.select2-results__option--group{
+
+    color:var(--text-light);
+
 }
