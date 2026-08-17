@@ -90,6 +90,33 @@ section{
 
 }
 
+.btn-secondary-custom{
+
+    background:var(--secondary);
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:var(--radius-pill);
+
+    padding:14px 34px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.btn-secondary-custom:hover{
+
+    transform:translateY(-4px);
+    background:var(--secondary-light);
+
+}
+
 .btn-login{
 
     background:transparent;
@@ -136,6 +163,93 @@ section{
 /* ==========================
    THEME TOGGLE
 ========================== */
+
+/* ==========================
+   ALERTS (Bootstrap override)
+   Bootstrap's alert-success/danger/warning/info are raw stock
+   green/red/yellow/blue, never brought into the palette. Same
+   semantic intent (success/error/warning/info), Slate & Copper
+   colors instead — soft tint + left accent stripe, body text
+   always var(--text) so readability never depends on getting a
+   tint's contrast exactly right.
+========================== */
+
+.alert{
+
+    border:none;
+    border-left:4px solid transparent;
+    border-radius:var(--radius-sm);
+    color:var(--text);
+    background:var(--surface);
+
+}
+
+.alert-success{
+
+    border-left-color:var(--primary);
+    background:#E4EFF1;
+    background:color-mix(in srgb, var(--primary) 12%, var(--surface));
+
+}
+
+[data-theme="dark"] .alert-success{
+
+    background:#193241;
+    background:color-mix(in srgb, var(--primary) 12%, var(--surface));
+
+}
+
+.alert-danger{
+
+    border-left-color:#B23A3A;
+    background:#F6E7E7;
+    background:color-mix(in srgb, #B23A3A 12%, var(--surface));
+
+}
+
+[data-theme="dark"] .alert-danger{
+
+    border-left-color:#D97A7A;
+    background:#2E2D39;
+    background:color-mix(in srgb, #D97A7A 14%, var(--surface));
+
+}
+
+.alert-warning{
+
+    border-left-color:var(--accent);
+    background:#F3EAE4;
+    background:color-mix(in srgb, var(--accent) 14%, var(--surface));
+
+}
+
+[data-theme="dark"] .alert-warning{
+
+    background:#292D34;
+    background:color-mix(in srgb, var(--accent) 14%, var(--surface));
+
+}
+
+.alert-info{
+
+    border-left-color:var(--secondary-light);
+    background:#E1E5E7;
+    background:color-mix(in srgb, var(--secondary-light) 14%, var(--surface));
+
+}
+
+[data-theme="dark"] .alert-info{
+
+    background:#182837;
+    background:color-mix(in srgb, var(--secondary-light) 14%, var(--surface));
+
+}
+
+[data-theme="dark"] .alert .btn-close{
+
+    filter:invert(1) grayscale(100%) brightness(200%);
+
+}
 
 .theme-toggle{
 

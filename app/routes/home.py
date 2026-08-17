@@ -334,7 +334,7 @@ def export_pdf():
             ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
             ("BOTTOMPADDING", (0, 0), (-1, 0), 12),
 
-            ("BACKGROUND", (0, 1), (-1, -1), colors.beige),
+            ("BACKGROUND", (0, 1), (-1, -1), colors.HexColor("#EFEAE2")),
 
             ("GRID", (0, 0), (-1, -1), 1, colors.grey),
 

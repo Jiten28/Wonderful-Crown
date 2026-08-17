@@ -576,19 +576,27 @@
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice{
 
+    display:inline-flex;
+    align-items:center;
     background:var(--bg-tint);
     border:1px solid var(--border-soft);
     border-radius:var(--radius-sm);
     color:var(--text);
-    padding:4px 8px;
+    padding:6px 10px;
+    margin:4px 4px 4px 0;
+    line-height:1.3;
 
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
 
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
     color:var(--text-light);
     border-right:1px solid var(--border-soft);
-    margin-right:6px;
+    padding-right:8px;
+    margin-right:8px;
 
 }
 
