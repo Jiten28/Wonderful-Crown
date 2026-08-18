@@ -110,30 +110,104 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  new Chart(document.getElementById("diseaseChart"), {
-    type: "pie",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          data: values,
-        },
-      ],
-    },
-  });
+  (function () {
+    function getThemeColors() {
+      var styles = getComputedStyle(document.documentElement);
+      var read = function (name) {
+        return styles.getPropertyValue(name).trim();
+      };
+      return {
+        palette: [
+          read("--primary"),
+          read("--secondary"),
+          read("--accent"),
+          read("--primary-light"),
+          read("--secondary-light"),
+        ],
+        text: read("--text"),
+        textLight: read("--text-light"),
+        grid: read("--border-soft"),
+        surface: read("--surface"),
+      };
+    }
 
-  new Chart(document.getElementById("predictionChart"), {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Predictions",
-          data: values,
+    var diseaseChart = null;
+    var predictionChart = null;
+
+    function buildCharts() {
+      var c = getThemeColors();
+
+      if (diseaseChart) diseaseChart.destroy();
+      if (predictionChart) predictionChart.destroy();
+
+      diseaseChart = new Chart(document.getElementById("diseaseChart"), {
+        type: "pie",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: values,
+              backgroundColor: c.palette,
+              borderColor: c.surface,
+              borderWidth: 2,
+            },
+          ],
         },
-      ],
-    },
-  });
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: c.text },
+            },
+          },
+        },
+      });
+
+      predictionChart = new Chart(document.getElementById("predictionChart"), {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Predictions",
+              data: values,
+              backgroundColor: c.palette[0],
+              borderRadius: 6,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: c.text },
+            },
+          },
+          scales: {
+            x: {
+              ticks: { color: c.textLight },
+              grid: { color: c.grid },
+            },
+            y: {
+              ticks: { color: c.textLight },
+              grid: { color: c.grid },
+            },
+          },
+        },
+      });
+    }
+
+    buildCharts();
+
+    var toggle = document.getElementById("themeToggle");
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        setTimeout(buildCharts, 60);
+      });
+    }
+  })();
 </script>
 
 {% endblock %}

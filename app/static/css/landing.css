@@ -31,7 +31,7 @@
 
     background:
         radial-gradient(circle at 30% 8%, var(--glow-primary), transparent 40%),
-        radial-gradient(circle at 75% 92%, var(--glow-secondary), transparent 45%);
+        radial-gradient(circle at 75% 65%, var(--glow-secondary), transparent 40%);
 
 }
 

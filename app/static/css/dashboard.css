@@ -114,7 +114,11 @@
 
 .dashboard-stat{
 
-    background:var(--surface);
+    background:var(--surface-glass);
+
+    backdrop-filter:blur(21px);
+
+    border:1px solid var(--border-soft);
 
     border-radius:var(--radius-md);
 
@@ -134,22 +138,26 @@
 
     transform:translateY(-8px);
 
+    box-shadow:0 20px 50px rgba(11,79,92,.20);
+
+    border-color:var(--primary);
+
 }
 
 .dashboard-stat .stat-icon{
 
-    width:56px;
-    height:56px;
+    width:60px;
+    height:60px;
     display:flex;
     align-items:center;
     justify-content:center;
     margin:0 auto 20px;
 
-    background:var(--bg-tint);
-    border:1px solid rgba(11,79,92,.14);
+    background:radial-gradient(circle, var(--glow-primary), var(--bg-tint) 70%);
+    border:1px solid var(--border-soft);
     border-radius:50%;
 
-    font-size:1.4rem;
+    font-size:1.5rem;
     color:var(--primary);
 
 }
@@ -158,6 +166,8 @@
 
     color:var(--primary);
 
+    font-family:var(--font-display);
+    font-weight:600;
     font-size:2.5rem;
 
 }
