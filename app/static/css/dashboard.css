@@ -593,6 +593,8 @@
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    line-height:1;
+    font-size:1em;
     color:var(--text-light);
     border-right:1px solid var(--border-soft);
     padding-right:8px;

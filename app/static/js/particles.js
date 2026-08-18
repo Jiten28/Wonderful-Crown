@@ -293,7 +293,37 @@
 
   var rafId = null;
 
+  // Per-frame sync failsafe (the seam fix). Rather than depend on
+  // resize/ResizeObserver firing at the right moment — which is
+  // exactly where the hard-cut bug came from, some layout changes
+  // apparently weren't triggering either reliably — check every
+  // frame whether the canvas's actual drawing-buffer size still
+  // matches the .particle-zone wrapper's live rendered size, and
+  // resync immediately if not. This is cheap (one getBoundingClientRect
+  // call at 60fps) and self-limiting: once resizeCanvas() runs, the
+  // two values match again, so it does real work only exactly when
+  // there's a genuine mismatch, not on every frame.
+  var SYNC_TOLERANCE_PX = 1;
+
+  function checkSync() {
+    var liveRect = zone.getBoundingClientRect();
+    var widthDrift = Math.abs(liveRect.width - canvas.width);
+    var heightDrift = Math.abs(liveRect.height - canvas.height);
+
+    if (widthDrift > SYNC_TOLERANCE_PX || heightDrift > SYNC_TOLERANCE_PX) {
+      logSeamDebug(
+        "per-frame failsafe caught drift (w:" +
+          widthDrift.toFixed(1) +
+          " h:" +
+          heightDrift.toFixed(1) +
+          ") — resyncing"
+      );
+      resizeCanvas();
+    }
+  }
+
   function animate() {
+    checkSync();
     updateParticles();
     drawParticles();
     rafId = requestAnimationFrame(animate);
