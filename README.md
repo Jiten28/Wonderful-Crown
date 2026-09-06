@@ -13,7 +13,7 @@ An AI-powered Healthcare Recommendation System built with **Flask**, **Machine L
 # 🌐 Live Demo
 
 **Application:**  
-https://mediverse-ai.onrender.com
+[Wonderful-Crown](https://wonderful-crown.onrender.com)
 
 ---
 
@@ -274,7 +274,7 @@ The application is deployed on **Render**.
 
 **Live Demo:**
 
-https://mediverse-ai.onrender.com
+https://wonderful-crown.onrender.com
 
 ---
 
@@ -288,7 +288,6 @@ Regular users cannot access the Admin Dashboard.
 
 # 📸 Project Preview
 
-> Screenshots will be added after the final UI is completed.
 
 | Landing Page | Dashboard |
 |--------------|-----------|
