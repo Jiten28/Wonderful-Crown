@@ -42,6 +42,7 @@ def create_app():
     with app.app_context():
         from app.models.user import User
         from app.models.prediction_history import PredictionHistory
+        from app.models.appointment import Appointment
 
         db.create_all()
 

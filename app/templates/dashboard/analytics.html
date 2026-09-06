@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
+{% extends "layout/app_base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/dashboard.css') }}"
@@ -6,109 +6,262 @@
 {% endblock %} {% block title %} Healthcare Analytics {% endblock %} {% block
 content %}
 
-<section class="dashboard-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1>Healthcare Analytics</h1>
+<header class="page-header">
+  <div class="page-header__bar">
+    <div>
+      <span class="wc-eyebrow">Insights</span>
+      <h1>Healthcare Analytics</h1>
+      <p>
+        Explore your prediction trends, AI confidence and disease statistics
+        through interactive dashboards.
+      </p>
+    </div>
 
-        <p>
-          Explore healthcare trends, AI insights and disease statistics through
-          interactive dashboards.
-        </p>
-      </div>
+    <div class="page-header__actions">
+      <a
+        href="{{ url_for('home.export_excel') }}"
+        class="btn btn-primary-custom"
+      >
+        <i class="bi bi-file-earmark-excel me-2"></i>Export Excel
+      </a>
 
-      <div class="col-lg-6 text-center">
-        <i class="bi bi-graph-up-arrow dashboard-svg"></i>
-      </div>
+      <a href="{{ url_for('home.export_pdf') }}" class="btn btn-secondary-custom">
+        <i class="bi bi-file-earmark-pdf me-2"></i>Export PDF
+      </a>
     </div>
   </div>
-</section>
+</header>
 
-<section class="container py-5">
-  <div class="row g-4">
-    <div class="col-lg-4">
-      <div class="dashboard-stat">
-        <h2>{{ total_predictions }}</h2>
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="dashboard-stat">
+      <i class="bi bi-clipboard2-pulse stat-icon"></i>
+      <h2>{{ total_predictions }}</h2>
 
-        <p>Total Predictions</p>
-      </div>
-    </div>
-
-    <div class="col-lg-4">
-      <div class="dashboard-stat">
-        <h2>
-          {% if most_predicted %} {{ most_predicted.replace("_"," ").title() }}
-          {% else %} No Data {% endif %}
-        </h2>
-
-        <p>Most Predicted Disease</p>
-      </div>
-    </div>
-
-    <div class="col-lg-4">
-      <div class="dashboard-stat">
-        <h2>{{ avg_confidence }}%</h2>
-
-        <p>Average Confidence</p>
-      </div>
+      <p>Total Predictions</p>
     </div>
   </div>
 
-  <div class="dashboard-card mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h3>Recent Predictions</h3>
+  <div class="col-lg-4">
+    <div class="dashboard-stat">
+      <i class="bi bi-virus stat-icon"></i>
+      <h2 class="dashboard-stat__text">
+        {% if most_predicted %} {{ most_predicted.replace("_"," ").title() }} {%
+        else %} No Data {% endif %}
+      </h2>
 
-      <div>
-        <a
-          href="{{ url_for('home.export_excel') }}"
-          class="btn btn-primary-custom me-2"
-        >
-          <i class="bi bi-file-earmark-excel"></i>
-          Export Excel
-        </a>
-
-        <a href="{{ url_for('home.export_pdf') }}" class="btn btn-secondary-custom">
-          <i class="bi bi-file-earmark-pdf"></i>
-          Export PDF
-        </a>
-      </div>
+      <p>Most Predicted Disease</p>
     </div>
-
-    {% if predictions %}
-
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Disease</th>
-
-          <th>Confidence</th>
-
-          <th>Date</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for p in predictions %}
-
-        <tr>
-          <td>{{ p.disease.replace("_"," ").title() }}</td>
-
-          <td>{{ p.confidence }}%</td>
-
-          <td>{{ p.created_at.strftime("%d-%m-%Y") }}</td>
-        </tr>
-
-        {% endfor %}
-      </tbody>
-    </table>
-
-    {% else %}
-
-    <p>No predictions available.</p>
-
-    {% endif %}
   </div>
-</section>
+
+  <div class="col-lg-4">
+    <div class="dashboard-stat">
+      <i class="bi bi-cpu stat-icon"></i>
+      <h2>{{ avg_confidence }}%</h2>
+
+      <p>Average Confidence</p>
+    </div>
+  </div>
+</div>
+
+{% if predictions %}
+<div class="row g-4 mt-1">
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <h4>Disease Frequency</h4>
+      <canvas id="freqChart"></canvas>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <h4>Confidence Over Time</h4>
+      <canvas id="confidenceChart"></canvas>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="dashboard-card mt-4">
+  <h3 class="mb-4">Recent Predictions</h3>
+
+  {% if predictions %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Disease</th>
+
+        <th>Confidence</th>
+
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for p in predictions %}
+
+      <tr>
+        <td>{{ p.disease.replace("_"," ").title() }}</td>
+
+        <td>
+          <span
+            class="confidence-pill {% if p.confidence >= 70 %}confidence-pill--high{% elif p.confidence >= 40 %}confidence-pill--med{% else %}confidence-pill--low{% endif %}"
+          >
+            {{ p.confidence }}%
+          </span>
+        </td>
+
+        <td>{{ p.created_at.strftime("%d-%m-%Y") }}</td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p class="result-empty mb-0">No predictions available yet.</p>
+
+  {% endif %}
+</div>
+
+{% if predictions %}
+<script>
+  {% set _diseases = [] %}
+  {% set _confidences = [] %}
+  {% set _dates = [] %}
+  {% for p in predictions %}
+    {% set _ = _diseases.append(p.disease.replace('_', ' ').title()) %}
+    {% set _ = _confidences.append(p.confidence) %}
+    {% set _ = _dates.append(p.created_at.strftime('%d-%m-%Y')) %}
+  {% endfor %}
+  const A_DISEASES = {{ _diseases | tojson }};
+  const A_CONFIDENCES = {{ _confidences | tojson }};
+  const A_DATES = {{ _dates | tojson }};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  (function () {
+    var reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    function getThemeColors() {
+      var styles = getComputedStyle(document.documentElement);
+      var read = function (name) {
+        return styles.getPropertyValue(name).trim();
+      };
+      return {
+        palette: [
+          read("--primary"),
+          read("--secondary"),
+          read("--accent"),
+          read("--primary-light"),
+          read("--secondary-light"),
+        ],
+        text: read("--text"),
+        textLight: read("--text-light"),
+        grid: read("--border-soft"),
+        surface: read("--surface"),
+        signal: read("--signal-2") || read("--primary"),
+      };
+    }
+
+    // Aggregate the disease list into { labels, values } frequency pairs.
+    function frequency(arr) {
+      var map = {};
+      arr.forEach(function (d) {
+        map[d] = (map[d] || 0) + 1;
+      });
+      return { labels: Object.keys(map), values: Object.values(map) };
+    }
+
+    var freqChart = null;
+    var confidenceChart = null;
+
+    function buildCharts() {
+      var c = getThemeColors();
+      var freq = frequency(A_DISEASES);
+
+      if (freqChart) freqChart.destroy();
+      if (confidenceChart) confidenceChart.destroy();
+
+      freqChart = new Chart(document.getElementById("freqChart"), {
+        type: "bar",
+        data: {
+          labels: freq.labels,
+          datasets: [
+            {
+              label: "Predictions",
+              data: freq.values,
+              backgroundColor: c.palette[0],
+              borderRadius: 6,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: reduceMotion ? false : undefined,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { ticks: { color: c.textLight }, grid: { color: c.grid } },
+            y: {
+              beginAtZero: true,
+              ticks: { color: c.textLight, precision: 0 },
+              grid: { color: c.grid },
+            },
+          },
+        },
+      });
+
+      confidenceChart = new Chart(document.getElementById("confidenceChart"), {
+        type: "line",
+        data: {
+          labels: A_DATES,
+          datasets: [
+            {
+              label: "Confidence %",
+              data: A_CONFIDENCES,
+              borderColor: c.signal,
+              backgroundColor: c.grid,
+              pointBackgroundColor: c.signal,
+              tension: 0.35,
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: reduceMotion ? false : undefined,
+          plugins: { legend: { labels: { color: c.text } } },
+          scales: {
+            x: { ticks: { color: c.textLight }, grid: { color: c.grid } },
+            y: {
+              min: 0,
+              max: 100,
+              ticks: { color: c.textLight },
+              grid: { color: c.grid },
+            },
+          },
+        },
+      });
+    }
+
+    buildCharts();
+
+    var toggle = document.getElementById("themeToggle");
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        setTimeout(buildCharts, 60);
+      });
+    }
+  })();
+</script>
+{% endif %}
 
 {% endblock %}

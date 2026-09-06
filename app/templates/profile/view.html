@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %} {% block css %}
+{% extends "layout/app_base.html" %} {% block css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/dashboard.css') }}"
@@ -9,141 +9,139 @@
 />
 {% endblock %} {% block title %}My Profile{% endblock %} {% block content %}
 
-<section class="dashboard-hero">
-  <div class="container">
-    <h1>My Profile</h1>
-    <p>Your account details and preferences.</p>
+<header class="page-header">
+  <div class="page-header__bar">
+    <div>
+      <span class="wc-eyebrow">Account</span>
+      <h1>My Profile</h1>
+      <p>Your account details and preferences.</p>
+    </div>
   </div>
-</section>
+</header>
 
-<section>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-7">
-        <div class="dashboard-card profile-card">
-          <div class="profile-header">
-            {% if current_user.profile_photo %}
-            <img
-              src="{{ url_for('static', filename=current_user.profile_photo) }}"
-              class="profile-photo"
-              alt="{{ current_user.name }}"
-            />
-            {% else %}
-            <div class="profile-photo profile-photo-initials">
-              {{ current_user.name[:2].upper() }}
-            </div>
-            {% endif %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="dashboard-card profile-card">
+      <div class="profile-header">
+        {% if current_user.profile_photo %}
+        <img
+          src="{{ url_for('static', filename=current_user.profile_photo) }}"
+          class="profile-photo"
+          alt="{{ current_user.name }}"
+        />
+        {% else %}
+        <div class="profile-photo profile-photo-initials">
+          {{ current_user.name[:2].upper() }}
+        </div>
+        {% endif %}
 
-            <div>
-              <h3 class="mb-1">{{ current_user.name }}</h3>
-              <p class="text-muted mb-0">{{ current_user.email }}</p>
-            </div>
-          </div>
+        <div>
+          <h3 class="mb-1">{{ current_user.name }}</h3>
+          <p class="text-muted mb-0">{{ current_user.email }}</p>
+        </div>
+      </div>
 
-          <hr />
+      <hr />
 
-          <div class="profile-field-row">
-            <span class="profile-field-label">Phone</span>
-            <span>{{ current_user.phone or "Not set" }}</span>
-          </div>
+      <div class="profile-field-row">
+        <span class="profile-field-label">Phone</span>
+        <span>{{ current_user.phone or "Not set" }}</span>
+      </div>
 
-          <div class="profile-field-row">
-            <span class="profile-field-label">Language</span>
-            <span>
-              {{ {"en": "English", "es": "Español", "fr": "Français", "hi":
-              "हिन्दी", "ar": "العربية"}.get(current_user.language, "English")
-              }}
-            </span>
-          </div>
+      <div class="profile-field-row">
+        <span class="profile-field-label">Language</span>
+        <span>
+          {{ {"en": "English", "es": "Español", "fr": "Français", "hi":
+          "हिन्दी", "ar": "العربية"}.get(current_user.language, "English") }}
+        </span>
+      </div>
 
-          <div class="profile-field-row">
-            <span class="profile-field-label">Member Since</span>
-            <span>
-              {{ current_user.created_at.strftime("%B %d, %Y") if
-              current_user.created_at else "—" }}
-            </span>
-          </div>
+      <div class="profile-field-row">
+        <span class="profile-field-label">Member Since</span>
+        <span>
+          {{ current_user.created_at.strftime("%B %d, %Y") if
+          current_user.created_at else "—" }}
+        </span>
+      </div>
 
-          {% if current_user.bio %}
-          <div class="profile-field-row profile-bio-row">
-            <span class="profile-field-label">Bio</span>
-            <p class="mb-0">{{ current_user.bio }}</p>
+      {% if current_user.bio %}
+      <div class="profile-field-row profile-bio-row">
+        <span class="profile-field-label">Bio</span>
+        <p class="mb-0">{{ current_user.bio }}</p>
+      </div>
+      {% endif %}
+
+      <button
+        type="button"
+        id="profileEditToggle"
+        class="btn btn-primary-custom mt-4"
+      >
+        <i class="bi bi-pencil-square me-2"></i>
+        <span id="profileEditToggleLabel">Edit Profile</span>
+      </button>
+    </div>
+
+    <div
+      class="dashboard-card prediction-form profile-edit-panel mt-4"
+      id="profileEditPanel"
+      style="display: {{ 'block' if open_edit else 'none' }};"
+    >
+      <form method="POST" action="{{ url_for('profile.settings') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-4 profile-photo-field">
+          {% if current_user.profile_photo %}
+          <img
+            src="{{ url_for('static', filename=current_user.profile_photo) }}"
+            class="profile-photo"
+            alt="{{ current_user.name }}"
+          />
+          {% else %}
+          <div class="profile-photo profile-photo-initials">
+            {{ current_user.name[:2].upper() }}
           </div>
           {% endif %}
 
-          <button
-            type="button"
-            id="profileEditToggle"
-            class="btn btn-primary-custom mt-4"
-          >
-            <i class="bi bi-pencil-square me-2"></i>
-            <span id="profileEditToggleLabel">Edit Profile</span>
-          </button>
+          <div>
+            {{ form.photo.label(class="form-label d-block") }} {{
+            form.photo(class="form-control") }}
+            {% for error in form.photo.errors %}
+            <small class="text-danger d-block mt-1">{{ error }}</small>
+            {% endfor %}
+          </div>
         </div>
 
-        <div
-          class="dashboard-card prediction-form profile-edit-panel mt-4"
-          id="profileEditPanel"
-          style="display: {{ 'block' if open_edit else 'none' }};"
-        >
-          <form method="POST" action="{{ url_for('profile.settings') }}" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-
-            <div class="mb-4 profile-photo-field">
-              {% if current_user.profile_photo %}
-              <img
-                src="{{ url_for('static', filename=current_user.profile_photo) }}"
-                class="profile-photo"
-                alt="{{ current_user.name }}"
-              />
-              {% else %}
-              <div class="profile-photo profile-photo-initials">
-                {{ current_user.name[:2].upper() }}
-              </div>
-              {% endif %}
-
-              <div>
-                {{ form.photo.label(class="form-label d-block") }} {{
-                form.photo(class="form-control") }}
-                {% for error in form.photo.errors %}
-                <small class="text-danger d-block mt-1">{{ error }}</small>
-                {% endfor %}
-              </div>
-            </div>
-
-            <div class="mb-3">
-              {{ form.name.label(class="form-label") }} {{
-              form.name(class="form-control") }}
-              {% for error in form.name.errors %}
-              <small class="text-danger d-block mt-1">{{ error }}</small>
-              {% endfor %}
-            </div>
-
-            <div class="mb-3">
-              {{ form.phone.label(class="form-label") }} {{
-              form.phone(class="form-control") }}
-            </div>
-
-            <div class="mb-3">
-              {{ form.bio.label(class="form-label") }} {{
-              form.bio(class="form-control", rows="4") }}
-            </div>
-
-            <div class="mb-4">
-              {{ form.language.label(class="form-label") }} {{
-              form.language(class="form-control") }}
-            </div>
-
-            {{ form.submit(class="btn btn-primary-custom") }}
-            <button type="button" id="profileEditCancel" class="btn btn-login">
-              Cancel
-            </button>
-          </form>
+        <div class="mb-3">
+          {{ form.name.label(class="form-label") }} {{
+          form.name(class="form-control") }}
+          {% for error in form.name.errors %}
+          <small class="text-danger d-block mt-1">{{ error }}</small>
+          {% endfor %}
         </div>
-      </div>
+
+        <div class="mb-3">
+          {{ form.phone.label(class="form-label") }} {{
+          form.phone(class="form-control") }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.bio.label(class="form-label") }} {{
+          form.bio(class="form-control", rows="4") }}
+        </div>
+
+        <div class="mb-4">
+          {{ form.language.label(class="form-label") }} {{
+          form.language(class="form-control") }}
+        </div>
+
+        {{ form.submit(class="btn btn-primary-custom") }}
+        <button type="button" id="profileEditCancel" class="btn btn-login">
+          Cancel
+        </button>
+      </form>
     </div>
   </div>
-</section>
+</div>
 
 {% endblock %} {% block js %}
 <script>

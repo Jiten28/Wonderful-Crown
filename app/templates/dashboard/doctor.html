@@ -8,145 +8,173 @@ content %}
 
 <section class="dashboard-hero">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1>Doctor Recommendation</h1>
-
-        <p>
-          Find the right specialist based on your predicted disease and
-          healthcare requirements.
-        </p>
-      </div>
-
-      <div class="col-lg-6 text-center">
-        <i class="bi bi-heart-pulse dashboard-svg"></i>
-      </div>
-    </div>
+    <span class="wc-eyebrow">Specialist Network</span>
+    <h1>Find the Right Specialist</h1>
+    <p>
+      Wonderful Crown maps each predicted condition to the medical specialty
+      best suited to treat it — browse specialists below and book an
+      appointment in a couple of clicks.
+    </p>
   </div>
 </section>
 
 <section class="container py-5">
   <div class="row g-4">
-    <!-- Cardiologist -->
-    <div class="col-lg-3 col-md-6">
+    {% for spec in specialties %} {% set doctors =
+    doctors_by_specialty.get(spec.name, []) %}
+    <div class="col-lg-4 col-md-6">
       <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Cardiologist</h4>
-        <p>Heart & Blood Pressure Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
+        <i class="bi {{ spec.icon }} doctor-icon"></i>
+        <h4>{{ spec.name }}</h4>
+        <p>{{ spec.tagline }}</p>
 
-    <!-- Dermatologist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Dermatologist</h4>
-        <p>Skin, Hair & Allergy Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
+        {% if doctors %}
+        <div class="doctor-roster">
+          {% for doc in doctors %}
+          <div class="doctor-roster__item">
+            <div class="doctor-roster__head">
+              <span class="doctor-roster__name">{{ doc.name }}</span>
+              {% if doc.fee %}
+              <span class="doctor-roster__fee">&#8377;{{ doc.fee }}</span>
+              {% endif %}
+            </div>
 
-    <!-- Neurologist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Neurologist</h4>
-        <p>Brain & Nervous System Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
+            <div class="doctor-roster__meta">
+              {% if doc.qualification %}
+              <span>{{ doc.qualification }}</span>
+              {% endif %} {% if doc.experience_years %}
+              <span>{{ doc.experience_years }} yrs experience</span>
+              {% endif %} {% if doc.available_days or doc.available_time %}
+              <span>
+                {{ doc.available_days }}{% if doc.available_days and
+                doc.available_time %} &middot; {% endif %}{{ doc.available_time
+                }}
+              </span>
+              {% endif %}
+            </div>
 
-    <!-- Orthopedic -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Orthopedic</h4>
-        <p>Bones & Joint Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
+            {% if current_user.is_authenticated %}
+            <button
+              type="button"
+              class="btn btn-primary-custom w-100"
+              data-bs-toggle="modal"
+              data-bs-target="#bookingModal"
+              data-doctor="{{ doc.name }}"
+              data-specialty="{{ spec.name }}"
+            >
+              Book Appointment
+            </button>
+            {% else %}
+            <a
+              href="{{ url_for('auth.login') }}"
+              class="btn btn-login w-100"
+            >
+              Login to Book
+            </a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="doctor-roster__empty">
+          No doctors listed yet — add them in
+          <code>app/data/doctors.csv</code>.
+        </p>
+        {% endif %}
       </div>
     </div>
-
-    <!-- Pediatrician -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Pediatrician</h4>
-        <p>Child Healthcare Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- ENT -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>ENT Specialist</h4>
-        <p>Ear, Nose & Throat Care</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- Ophthalmologist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Ophthalmologist</h4>
-        <p>Eye Care Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- Gynecologist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Gynecologist</h4>
-        <p>Women's Health Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- Psychiatrist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Psychiatrist</h4>
-        <p>Mental Health Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- Dentist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Dentist</h4>
-        <p>Dental & Oral Care</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- Pulmonologist -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>Pulmonologist</h4>
-        <p>Lung & Respiratory Specialist</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
-
-    <!-- General Physician -->
-    <div class="col-lg-3 col-md-6">
-      <div class="doctor-card">
-        <i class="bi bi-heart-pulse doctor-icon"></i>
-        <h4>General Physician</h4>
-        <p>Primary Healthcare Expert</p>
-        <button class="btn btn-primary-custom w-100">Book Appointment</button>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </section>
 
-{% endblock %}
+{% if current_user.is_authenticated %}
+<!-- Shared booking modal — the "Book Appointment" buttons above set the
+     hidden doctor_name/specialty fields via the show.bs.modal handler. -->
+<div
+  class="modal fade"
+  id="bookingModal"
+  tabindex="-1"
+  aria-labelledby="bookingModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content booking-modal">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookingModalLabel">Book Appointment</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <form method="POST" action="{{ url_for('home.book_appointment') }}">
+        {{ booking_form.hidden_tag() }}
+
+        <div class="modal-body">
+          <p class="booking-modal__doctor">
+            <i class="bi bi-person-badge"></i>
+            <span id="bookingDoctorLabel">Selected doctor</span>
+          </p>
+
+          <div class="mb-3">
+            {{ booking_form.appointment_date.label(class="form-label") }} {{
+            booking_form.appointment_date(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ booking_form.appointment_time.label(class="form-label") }} {{
+            booking_form.appointment_time(class="form-select") }}
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-login"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          {{ booking_form.submit(class="btn btn-primary-custom") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %} {% endblock %} {% block js %} {% if current_user.is_authenticated %}
+<script>
+  (function () {
+    var modalEl = document.getElementById("bookingModal");
+    if (!modalEl) return;
+
+    var doctorInput = document.getElementById("doctor_name");
+    var specialtyInput = document.getElementById("specialty");
+    var dateInput = document.getElementById("appointment_date");
+    var doctorLabel = document.getElementById("bookingDoctorLabel");
+
+    modalEl.addEventListener("show.bs.modal", function (event) {
+      var trigger = event.relatedTarget;
+      if (!trigger) return;
+
+      var doctor = trigger.getAttribute("data-doctor") || "";
+      var specialty = trigger.getAttribute("data-specialty") || "";
+
+      if (doctorInput) doctorInput.value = doctor;
+      if (specialtyInput) specialtyInput.value = specialty;
+      if (doctorLabel) {
+        doctorLabel.textContent = specialty
+          ? doctor + " · " + specialty
+          : doctor;
+      }
+
+      // Block past dates in the picker (the /book route enforces this
+      // server-side as well).
+      if (dateInput) {
+        dateInput.min = new Date().toISOString().split("T")[0];
+      }
+    });
+  })();
+</script>
+{% endif %} {% endblock %}

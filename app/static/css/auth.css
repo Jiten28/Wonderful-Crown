@@ -1,5 +1,5 @@
 /* ==========================
-   AUTH PAGE
+   AUTH PAGE — split-screen shell
 ========================== */
 
 .auth-section{
@@ -9,73 +9,203 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:120px 0;
-    background:linear-gradient(135deg,var(--bg-tint),var(--bg));
+    padding:48px 20px;
+    background:transparent;
 }
+
+.auth-shell{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    max-width:1040px;
+
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+
+    background:var(--surface-glass);
+    backdrop-filter:blur(24px);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-md);
+    box-shadow:var(--shadow-lg);
+    overflow:hidden;
+}
+
+/* ==========================
+   BRAND PANEL (left)
+========================== */
+
+.auth-brand{
+    position:relative;
+    overflow:hidden;
+    padding:var(--space-card);
+    display:flex;
+    flex-direction:column;
+    gap:36px;
+
+    color:#fff;
+    background:linear-gradient(150deg,var(--secondary),var(--dark));
+}
+
+/* Ambient signal glow — quiet, non-animated */
+.auth-brand::before{
+    content:"";
+    position:absolute;
+    width:480px;
+    height:480px;
+    top:-160px;
+    right:-180px;
+    border-radius:50%;
+    background:radial-gradient(circle,var(--signal-2),transparent 70%);
+    opacity:.16;
+    pointer-events:none;
+}
+
+.auth-brand__mark{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:.2px;
+}
+
+.auth-brand__mark img{
+    height:34px;
+    width:auto;
+}
+
+.auth-brand__body{
+    position:relative;
+    margin-top:auto;
+}
+
+.auth-brand__body h3{
+    font-family:var(--font-display);
+    font-size:2rem;
+    line-height:1.2;
+    font-weight:600;
+    margin-bottom:14px;
+    color:#fff;
+}
+
+.auth-brand__body p{
+    color:rgba(255,255,255,.72);
+    font-size:1rem;
+    line-height:1.7;
+    max-width:38ch;
+    margin:0;
+}
+
+/* Pulse motif — one calm heartbeat, reduced-motion aware */
+.auth-pulse{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:28px;
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.6);
+}
+
+.auth-pulse__dot{
+    position:relative;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--signal-2);
+    box-shadow:0 0 0 0 rgba(79,182,201,.55);
+    animation:authPulse 2.4s var(--ease-out) infinite;
+}
+
+@keyframes authPulse{
+    0%{box-shadow:0 0 0 0 rgba(79,182,201,.5);}
+    70%{box-shadow:0 0 0 12px rgba(79,182,201,0);}
+    100%{box-shadow:0 0 0 0 rgba(79,182,201,0);}
+}
+
+/* Trust points */
+.auth-trust{
+    position:relative;
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.auth-trust li{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    color:rgba(255,255,255,.86);
+    font-size:.94rem;
+    line-height:1.5;
+}
+
+.auth-trust li i{
+    flex-shrink:0;
+    margin-top:2px;
+    width:26px;
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.18);
+    color:var(--signal-2);
+    font-size:.85rem;
+}
+
+/* ==========================
+   FORM PANEL (right)
+========================== */
 
 .auth-card{
     position:relative;
     z-index:2;
 
-    max-width:500px;
-    width:100%;
-
-    background:var(--surface-glass);
-
-    backdrop-filter:blur(24px);
-
-    border-radius:var(--radius-md);
-
+    background:transparent;
     padding:var(--space-card);
 
-    box-shadow:0 20px 60px rgba(0,0,0,.08);
-
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
 }
 
 .auth-card h2{
-
-    text-align:center;
-
-    margin-bottom:10px;
-
+    margin-bottom:8px;
     font-weight:700;
-
 }
 
-.auth-card p{
-
-    text-align:center;
-
+.auth-card > p{
     color:var(--text-light);
-
-    margin-bottom:35px;
-
+    margin-bottom:32px;
 }
 
 .form-control{
-
     border-radius:var(--radius-sm);
-
     padding:14px;
-
 }
 
 .auth-btn{
-
     width:100%;
-
     padding:14px;
-
     border-radius:var(--radius-pill);
-
+    margin-top:4px;
 }
 
 .auth-link{
-
     text-align:center;
-
-    margin-top:25px;
-
+    margin-top:24px;
+    color:var(--text-light);
 }
 
 /* ==========================
@@ -91,29 +221,18 @@
 }
 
 .toggle-password{
-
     position:absolute;
-
     top:50%;
-
     right:18px;
-
     transform:translateY(-50%);
-
     cursor:pointer;
-
     font-size:20px;
-
     color:var(--text-light);
-
-    transition:.3s;
-
+    transition:var(--transition-fast);
 }
 
 .toggle-password:hover{
-
     color:var(--primary);
-
 }
 
 /* ==========================
@@ -121,43 +240,62 @@
 ========================== */
 
 .password-strength{
-
     margin-top:12px;
-
 }
 
 .strength-bar{
-
     width:100%;
-
     height:7px;
-
     background:var(--bg-tint);
-
     border-radius:var(--radius-pill);
-
     overflow:hidden;
-
 }
 
 #strength-fill{
-
     width:0;
-
     height:100%;
-
     border-radius:var(--radius-pill);
-
-    transition:.35s;
-
+    transition:var(--transition);
 }
 
 #strength-text{
-
     display:block;
-
     margin-top:8px;
-
     color:var(--text-light);
+}
 
+/* ==========================
+   RESPONSIVE — collapse to single column
+========================== */
+
+@media (max-width:860px){
+    .auth-shell{
+        grid-template-columns:1fr;
+        max-width:520px;
+    }
+
+    /* On small screens the form is the priority; keep a compact brand strip. */
+    .auth-brand{
+        gap:24px;
+        padding:32px var(--space-card);
+    }
+
+    .auth-brand__body{
+        margin-top:0;
+    }
+
+    .auth-brand__body h3{
+        font-size:1.5rem;
+    }
+
+    .auth-trust,
+    .auth-pulse{
+        display:none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .auth-pulse__dot{
+        animation:none;
+    }
 }

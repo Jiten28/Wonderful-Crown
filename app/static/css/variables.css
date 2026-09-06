@@ -14,16 +14,19 @@
     /* ===== Surfaces ===== */
 
     --dark:#0A1420;
-    --text:#16232E;
-    --text-light:#5C6570;
+    --text:#132430;
+    --text-light:#566670;
 
     --white:#FFFFFF;
-    --bg:#F7F5F1;
-    --bg-tint:#EFEAE2;
+    /* Cool clinical premium — near-white with a faint slate-blue cast.
+       --bg is the top of the ambient gradient, --bg-tint the deeper base
+       (layout.css body::before) so the page has real vertical depth. */
+    --bg:#F6F9FB;
+    --bg-tint:#E8EFF2;
 
     --surface:#FFFFFF;
-    --surface-glass:rgba(255,255,255,.78);
-    --border-soft:rgba(27,45,62,.12);
+    --surface-glass:rgba(255,255,255,.80);
+    --border-soft:rgba(27,45,62,.13);
 
     --glass:rgba(255,255,255,.65);
     --glass-dark:rgba(255,255,255,.06);
@@ -31,6 +34,31 @@
 
     --glow-primary:rgba(27,122,140,.20);
     --glow-secondary:rgba(27,45,62,.5);
+
+    /* ===== Data chips / badges — richer than the old flat glow wash.
+       Tinted surface + dark-teal text, verified >=4.5:1. Resolves per
+       theme automatically (var(--primary)/var(--surface) are theme-scoped). ===== */
+    --chip-bg:color-mix(in srgb, var(--primary) 15%, var(--surface));
+    --chip-text:var(--primary-dark);
+
+    /* Copper "medium" chip (confidence-pill--med). Copper tint + a deeper
+       copper text so it clears 4.5:1 on the near-white surface — the raw
+       --accent (#A8663E) as text only reached ~3.8:1. */
+    --chip-med-bg:color-mix(in srgb, var(--accent) 16%, var(--surface));
+    --chip-med-text:#8A4F2C;
+
+    /* Semantic danger — was a token-less hardcoded #B23A3A. */
+    --danger:#B23A3A;
+
+    /* ===== Signal — reserved for AI / diagnostic surfaces only ===== */
+
+    --signal-1:#1B7A8C;
+    --signal-2:#4FB6C9;
+    --signal-grad:linear-gradient(135deg,var(--signal-1),var(--signal-2));
+
+    /* Elevated glass — cards atop cards, the diagnostic console */
+    --surface-2:rgba(255,255,255,.92);
+    --surface-2-border:rgba(27,45,62,.10);
 
     /* ===== Typography ===== */
 
@@ -53,17 +81,20 @@
     /* Card/panel padding — consolidates what was 30/35/40/45px scattered per-component */
     --space-card:40px;
 
-    /* ===== Shadow ===== */
+    /* ===== Shadow — slate-tinted, layered for premium depth ===== */
 
-    --shadow-sm:0 10px 25px rgba(10,20,32,.08);
+    --shadow-sm:0 8px 24px rgba(20,40,56,.10);
 
-    --shadow-md:0 15px 45px rgba(27,45,62,.18);
+    --shadow-md:0 18px 44px rgba(20,40,56,.16);
 
-    --shadow-lg:0 30px 80px rgba(10,20,32,.24);
+    --shadow-lg:0 34px 80px rgba(20,40,56,.22);
 
-    /* ===== Transition ===== */
+    /* ===== Transition & motion ===== */
 
     --transition:.35s ease;
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --transition-fast:.2s ease;
+    --transition-slow:.6s var(--ease-out);
 
 }
 
@@ -107,6 +138,20 @@
     --glow-primary:rgba(79,182,201,.16);
     --glow-secondary:rgba(42,66,86,.4);
 
+    /* Chips: stronger tint on the dark surface, light-teal text for contrast. */
+    --chip-bg:color-mix(in srgb, var(--primary) 22%, var(--surface));
+    --chip-text:var(--primary-light);
+    /* Copper "medium" chip — light copper text on a dark copper tint (>=4.5:1). */
+    --chip-med-bg:color-mix(in srgb, var(--accent) 24%, var(--surface));
+    --chip-med-text:#D8A07E;
+    --danger:#D97A7A;
+
+    --signal-1:#4FB6C9;
+    --signal-2:#7FCBDA;
+
+    --surface-2:rgba(23,40,56,.92);
+    --surface-2-border:rgba(255,255,255,.10);
+
     --shadow-sm:0 10px 25px rgba(0,0,0,.35);
     --shadow-md:0 15px 45px rgba(0,0,0,.4);
     --shadow-lg:0 30px 80px rgba(0,0,0,.5);
@@ -133,6 +178,15 @@
         --glass:rgba(255,255,255,.06);
         --glow-primary:rgba(79,182,201,.16);
         --glow-secondary:rgba(42,66,86,.4);
+        --chip-bg:color-mix(in srgb, var(--primary) 22%, var(--surface));
+        --chip-text:var(--primary-light);
+        --chip-med-bg:color-mix(in srgb, var(--accent) 24%, var(--surface));
+        --chip-med-text:#D8A07E;
+        --danger:#D97A7A;
+        --signal-1:#4FB6C9;
+        --signal-2:#7FCBDA;
+        --surface-2:rgba(23,40,56,.92);
+        --surface-2-border:rgba(255,255,255,.10);
         --shadow-sm:0 10px 25px rgba(0,0,0,.35);
         --shadow-md:0 15px 45px rgba(0,0,0,.4);
         --shadow-lg:0 30px 80px rgba(0,0,0,.5);

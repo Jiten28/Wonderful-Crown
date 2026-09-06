@@ -3,7 +3,10 @@ from flask import (
     Blueprint,
     render_template,
     send_file,
-    Response
+    Response,
+    flash,
+    redirect,
+    url_for
 )
 
 from flask_login import (
@@ -11,9 +14,15 @@ from flask_login import (
     current_user
 )
 
+import csv
+import os
+from datetime import date
+
 from app.models.user import User
 from app.models.prediction_history import PredictionHistory
+from app.models.appointment import Appointment
 from app.ml.recommend import get_recommendation
+from app.forms.booking_forms import BookingForm
 from app import db
 
 from io import BytesIO
@@ -36,6 +45,81 @@ from openpyxl.styles import Alignment
 
 
 home_bp = Blueprint("home", __name__)
+
+
+# ==========================
+# AI Doctor — specialty catalogue + doctor roster
+# ==========================
+
+# User-editable roster. recommend.py already probes for this same file;
+# add/edit rows there to change the doctors offered for booking.
+DOCTORS_CSV = os.path.join(
+    os.path.dirname(__file__), "..", "data", "doctors.csv"
+)
+
+# Ordered specialty list for the AI Doctor page. Icons + taglines mirror
+# the original static cards; the bookable doctors under each come from
+# doctors.csv, matched on the `specialty` column.
+SPECIALTIES = [
+    {"name": "Cardiologist", "icon": "bi-heart-pulse",
+     "tagline": "Heart & Blood Pressure Specialist"},
+    {"name": "Dermatologist", "icon": "bi-bandaid",
+     "tagline": "Skin, Hair & Allergy Specialist"},
+    {"name": "Neurologist", "icon": "bi-diagram-3",
+     "tagline": "Brain & Nervous System Specialist"},
+    {"name": "Orthopedic", "icon": "bi-person-walking",
+     "tagline": "Bones & Joint Specialist"},
+    {"name": "Pediatrician", "icon": "bi-balloon",
+     "tagline": "Child Healthcare Specialist"},
+    {"name": "ENT Specialist", "icon": "bi-ear",
+     "tagline": "Ear, Nose & Throat Care"},
+    {"name": "Ophthalmologist", "icon": "bi-eye",
+     "tagline": "Eye Care Specialist"},
+    {"name": "Gynecologist", "icon": "bi-gender-female",
+     "tagline": "Women's Health Specialist"},
+    {"name": "Psychiatrist", "icon": "bi-chat-heart",
+     "tagline": "Mental Health Specialist"},
+    {"name": "Dentist", "icon": "bi-emoji-smile",
+     "tagline": "Dental & Oral Care"},
+    {"name": "Pulmonologist", "icon": "bi-lungs",
+     "tagline": "Lung & Respiratory Specialist"},
+    {"name": "General Physician", "icon": "bi-clipboard2-pulse",
+     "tagline": "Primary Healthcare Expert"},
+]
+
+
+def _load_doctors():
+    """Read doctors.csv into a {specialty: [doctor dicts]} map.
+
+    Returns an empty map if the file is missing or unreadable, so the
+    page still renders the specialty cards (just without a bookable
+    roster) instead of erroring.
+    """
+
+    doctors_by_specialty = {}
+
+    if not os.path.exists(DOCTORS_CSV):
+        return doctors_by_specialty
+
+    try:
+        with open(DOCTORS_CSV, newline="", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                specialty = (row.get("specialty") or "").strip()
+                if not specialty:
+                    continue
+
+                doctors_by_specialty.setdefault(specialty, []).append({
+                    "name": (row.get("name") or "").strip(),
+                    "qualification": (row.get("qualification") or "").strip(),
+                    "experience_years": (row.get("experience_years") or "").strip(),
+                    "fee": (row.get("fee") or "").strip(),
+                    "available_days": (row.get("available_days") or "").strip(),
+                    "available_time": (row.get("available_time") or "").strip(),
+                })
+    except (OSError, csv.Error):
+        return {}
+
+    return doctors_by_specialty
 
 
 # Landing Page
@@ -158,7 +242,58 @@ def analytics():
 
 @home_bp.route("/doctor")
 def doctor():
-    return render_template("dashboard/doctor.html")
+    return render_template(
+        "dashboard/doctor.html",
+        specialties=SPECIALTIES,
+        doctors_by_specialty=_load_doctors(),
+        booking_form=BookingForm()
+    )
+
+
+# Book an appointment (login-gated action; viewing /doctor stays public)
+
+
+@home_bp.route("/book", methods=["POST"])
+@login_required
+def book_appointment():
+
+    form = BookingForm()
+
+    if form.validate_on_submit():
+
+        if form.appointment_date.data < date.today():
+            flash(
+                "Please choose a date today or later for your appointment.",
+                "danger"
+            )
+            return redirect(url_for("home.doctor"))
+
+        appointment = Appointment(
+            user_id=current_user.id,
+            doctor_name=form.doctor_name.data,
+            specialty=form.specialty.data,
+            appointment_date=form.appointment_date.data,
+            appointment_time=form.appointment_time.data,
+        )
+
+        db.session.add(appointment)
+        db.session.commit()
+
+        flash(
+            f"Appointment booked with {form.doctor_name.data} on "
+            f"{form.appointment_date.data.strftime('%d %b %Y')} "
+            f"({form.appointment_time.data}).",
+            "success"
+        )
+
+    else:
+        flash(
+            "We couldn't book that appointment. "
+            "Please pick a valid date and time and try again.",
+            "danger"
+        )
+
+    return redirect(url_for("home.doctor"))
 
 
 # Admin Page
@@ -180,6 +315,17 @@ def admin():
         ).distinct().count()
     )
 
+    # Real system-wide mean confidence (replaces the previously
+    # hardcoded "95% Accuracy" figure). Single aggregate query;
+    # None when there are no predictions yet.
+    avg_confidence = (
+        db.session.query(
+            db.func.avg(PredictionHistory.confidence)
+        ).scalar()
+    )
+
+    avg_confidence = round(avg_confidence, 2) if avg_confidence else 0
+
     recent_predictions = (
         PredictionHistory.query
         .order_by(PredictionHistory.created_at.desc())
@@ -192,6 +338,7 @@ def admin():
         total_users=total_users,
         total_predictions=total_predictions,
         total_diseases=total_diseases,
+        avg_confidence=avg_confidence,
         recent_predictions=recent_predictions
     )
 

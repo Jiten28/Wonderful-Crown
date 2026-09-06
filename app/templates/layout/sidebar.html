@@ -1,0 +1,118 @@
+<!-- =====================================================
+     APP SIDEBAR — authenticated app-shell rail.
+     Reuses the exact endpoints + request.endpoint active
+     logic from navbar.html. The theme toggle and the user
+     dropdown live in the top bar (app_base.html) so there
+     is a single #themeToggle and a single dropdown per page.
+===================================================== -->
+
+<aside class="app-sidebar" id="appSidebar">
+  <div class="app-sidebar__top">
+    <a
+      href="{{ url_for('home.home') }}"
+      class="app-brand"
+      aria-label="Wonderful Crown home"
+    >
+      <img
+        src="{{ url_for('static', filename='images/logo/Logo.svg') }}"
+        alt=""
+        class="app-brand__logo"
+      />
+      <span class="app-brand__text">Wonderful Crown</span>
+    </a>
+
+    <button
+      class="app-drawer-close"
+      id="appDrawerClose"
+      type="button"
+      aria-label="Close menu"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <nav class="app-nav" aria-label="Primary">
+    <a
+      class="app-nav__link {% if request.endpoint == 'home.dashboard' %}active{% endif %}"
+      href="{{ url_for('home.dashboard') }}"
+      {% if request.endpoint == 'home.dashboard' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-grid-1x2"></i><span>Dashboard</span>
+    </a>
+
+    <a
+      class="app-nav__link {% if request.endpoint == 'prediction.prediction' %}active{% endif %}"
+      href="{{ url_for('prediction.prediction') }}"
+      {% if request.endpoint == 'prediction.prediction' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-activity"></i><span>AI Prediction</span>
+    </a>
+
+    <a
+      class="app-nav__link {% if request.endpoint == 'home.medicine' %}active{% endif %}"
+      href="{{ url_for('home.medicine') }}"
+      {% if request.endpoint == 'home.medicine' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-capsule"></i><span>Medicine</span>
+    </a>
+
+    <a
+      class="app-nav__link {% if request.endpoint == 'home.analytics' %}active{% endif %}"
+      href="{{ url_for('home.analytics') }}"
+      {% if request.endpoint == 'home.analytics' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-graph-up-arrow"></i><span>Analytics</span>
+    </a>
+
+    <a
+      class="app-nav__link {% if request.endpoint == 'home.doctor' %}active{% endif %}"
+      href="{{ url_for('home.doctor') }}"
+      {% if request.endpoint == 'home.doctor' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-heart-pulse"></i><span>AI Doctor</span>
+    </a>
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <a
+      class="app-nav__link {% if request.endpoint == 'home.admin' %}active{% endif %}"
+      href="{{ url_for('home.admin') }}"
+      {% if request.endpoint == 'home.admin' %}aria-current="page"{% endif %}
+    >
+      <i class="bi bi-shield-lock"></i><span>Admin</span>
+    </a>
+    {% endif %}
+  </nav>
+
+  <div class="app-sidebar__foot">
+    <a
+      href="{{ url_for('home.home') }}"
+      class="app-nav__link app-nav__link--muted"
+    >
+      <i class="bi bi-box-arrow-up-right"></i><span>Back to site</span>
+    </a>
+
+    {% if current_user.is_authenticated %}
+    <a
+      href="{{ url_for('profile.view_profile') }}"
+      class="app-usercard {% if request.endpoint == 'profile.view_profile' %}active{% endif %}"
+    >
+      {% if current_user.profile_photo %}
+      <img
+        src="{{ url_for('static', filename=current_user.profile_photo) }}"
+        class="user-avatar user-avatar-photo"
+        alt="{{ current_user.name }}"
+      />
+      {% else %}
+      <div class="user-avatar">{{ current_user.name[:2].upper() }}</div>
+      {% endif %}
+
+      <span class="app-usercard__meta">
+        <span class="app-usercard__name">{{ current_user.name }}</span>
+        <span class="app-usercard__email">{{ current_user.email }}</span>
+      </span>
+    </a>
+    {% endif %}
+  </div>
+</aside>
+
+<div class="app-drawer-backdrop" id="appDrawerBackdrop"></div>

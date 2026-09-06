@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %} {% block css %}
+{% extends "layout/app_base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/dashboard.css') }}"
@@ -6,121 +6,115 @@
 {% endblock %} {% block title %}Medicine Recommendation{% endblock %} {% block
 content %}
 
-<section class="dashboard-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1>Medicine Recommendation</h1>
-
-        <p>
-          Receive AI-powered medicine recommendations based on the predicted
-          disease and patient profile.
-        </p>
-
-        {% if not recommendation %}
-        <a href="/prediction" class="btn btn-primary-custom mt-4">
-          Predict Disease First
-        </a>
-        {% endif %}
-      </div>
-
-      <div class="col-lg-6 text-center">
-        <i class="bi bi-capsule dashboard-svg"></i>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    {% if recommendation %}
-
-    <div class="disease-result-card">
-      <div class="confidence-label">Based on your latest prediction</div>
-      <div class="disease-result-name">
-        {{ latest.disease.replace("_", " ").title() }}
-      </div>
-      {% if latest.confidence %}
-      <div class="confidence-label mt-1">
-        Confidence: {{ latest.confidence }}%
-      </div>
-      {% endif %}
-    </div>
-
-    <div class="row g-4 mt-1">
-      <div class="col-lg-6">
-        <div class="result-card">
-          <div class="result-card-heading">
-            <div class="result-card-icon"><i class="bi bi-capsule"></i></div>
-            <h4>Medicines</h4>
-          </div>
-
-          {% if recommendation.medicines %}
-          <ul class="result-list">
-            {% for med in recommendation.medicines %}
-            <li><i class="bi bi-check-circle-fill"></i> {{ med }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="result-empty">No medicines available.</p>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="result-card">
-          <div class="result-card-heading">
-            <div class="result-card-icon"><i class="bi bi-basket"></i></div>
-            <h4>Diet</h4>
-          </div>
-
-          {% if recommendation.diet %}
-          <ul class="result-list">
-            {% for item in recommendation.diet %}
-            <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="result-empty">No diet recommendations available.</p>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="result-card">
-          <div class="result-card-heading">
-            <div class="result-card-icon">
-              <i class="bi bi-shield-check"></i>
-            </div>
-            <h4>Precautions</h4>
-          </div>
-
-          {% if recommendation.precautions %}
-          <ul class="result-list">
-            {% for item in recommendation.precautions %}
-            <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-          <p class="result-empty">No precautions available.</p>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    {% else %}
-
-    <div class="dashboard-card text-center">
-      <h3 class="mb-3">No predictions yet.</h3>
-      <p class="result-empty mb-4">
-        Run an AI disease prediction first to see personalized medicine,
-        diet, and precaution recommendations here.
+<header class="page-header">
+  <div class="page-header__bar">
+    <div>
+      <span class="wc-eyebrow">Recommendations</span>
+      <h1>Medicine Recommendation</h1>
+      <p>
+        AI-powered medicine, diet and precaution guidance based on your latest
+        predicted disease.
       </p>
-      <a href="/prediction" class="btn btn-primary-custom"> Start Prediction </a>
     </div>
 
+    {% if not recommendation %}
+    <div class="page-header__actions">
+      <a href="{{ url_for('prediction.prediction') }}" class="btn btn-primary-custom">
+        <i class="bi bi-activity me-2"></i>Predict Disease First
+      </a>
+    </div>
     {% endif %}
   </div>
-</section>
+</header>
+
+{% if recommendation %}
+
+<div class="disease-result-card">
+  <span class="signal-badge">Latest Prediction</span>
+  <div class="disease-result-name mt-3">
+    {{ latest.disease.replace("_", " ").title() }}
+  </div>
+  {% if latest.confidence %}
+  <div class="confidence-label mt-2">
+    Confidence: {{ latest.confidence }}%
+  </div>
+  {% endif %}
+</div>
+
+<div class="row g-4 mt-1">
+  <div class="col-lg-6">
+    <div class="result-card">
+      <div class="result-card-heading">
+        <div class="result-card-icon"><i class="bi bi-capsule"></i></div>
+        <h4>Medicines</h4>
+      </div>
+
+      {% if recommendation.medicines %}
+      <ul class="result-list">
+        {% for med in recommendation.medicines %}
+        <li><i class="bi bi-check-circle-fill"></i> {{ med }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="result-empty">No medicines available.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="result-card">
+      <div class="result-card-heading">
+        <div class="result-card-icon"><i class="bi bi-basket"></i></div>
+        <h4>Diet</h4>
+      </div>
+
+      {% if recommendation.diet %}
+      <ul class="result-list">
+        {% for item in recommendation.diet %}
+        <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="result-empty">No diet recommendations available.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="result-card">
+      <div class="result-card-heading">
+        <div class="result-card-icon">
+          <i class="bi bi-shield-check"></i>
+        </div>
+        <h4>Precautions</h4>
+      </div>
+
+      {% if recommendation.precautions %}
+      <ul class="result-list">
+        {% for item in recommendation.precautions %}
+        <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="result-empty">No precautions available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% else %}
+
+<div class="dashboard-card text-center">
+  <h3 class="mb-3">No predictions yet.</h3>
+  <p class="result-empty mb-4">
+    Run an AI disease prediction first to see personalized medicine, diet, and
+    precaution recommendations here.
+  </p>
+  <a href="{{ url_for('prediction.prediction') }}" class="btn btn-primary-custom">
+    Start Prediction
+  </a>
+</div>
+
+{% endif %}
 
 {% endblock %}

@@ -1,0 +1,16 @@
+specialty,name,qualification,experience_years,fee,available_days,available_time
+Cardiologist,Dr. Anil Mehta,"MBBS, MD, DM (Cardiology)",16,900,Mon-Fri,10:00 AM - 1:00 PM
+Cardiologist,Dr. Priya Nair,"MBBS, MD (Cardiology)",11,750,Tue-Sat,4:00 PM - 7:00 PM
+Dermatologist,Dr. Kavita Rao,"MBBS, MD (Dermatology)",9,600,Mon-Sat,11:00 AM - 2:00 PM
+Neurologist,Dr. Sameer Khan,"MBBS, DM (Neurology)",14,1000,Mon-Fri,9:00 AM - 12:00 PM
+Neurologist,Dr. Reena Iyer,"MBBS, DM (Neurology)",8,850,Wed-Sun,3:00 PM - 6:00 PM
+Orthopedic,Dr. Vikram Desai,"MBBS, MS (Orthopedics)",13,700,Mon-Sat,10:00 AM - 1:00 PM
+Pediatrician,Dr. Neha Gupta,"MBBS, MD (Pediatrics)",10,550,Mon-Fri,5:00 PM - 8:00 PM
+ENT Specialist,Dr. Arjun Menon,"MBBS, MS (ENT)",12,600,Tue-Sun,10:00 AM - 1:00 PM
+Ophthalmologist,Dr. Sunita Rao,"MBBS, MS (Ophthalmology)",15,650,Mon-Fri,11:00 AM - 2:00 PM
+Gynecologist,Dr. Meera Joshi,"MBBS, MD (Obstetrics & Gynaecology)",17,800,Mon-Sat,9:00 AM - 12:00 PM
+Psychiatrist,Dr. Rahul Verma,"MBBS, MD (Psychiatry)",9,900,Wed-Mon,4:00 PM - 7:00 PM
+Dentist,Dr. Pooja Shah,"BDS, MDS",7,500,Mon-Sat,10:00 AM - 1:00 PM
+Pulmonologist,Dr. Farhan Ali,"MBBS, MD (Pulmonology)",11,750,Mon-Fri,2:00 PM - 5:00 PM
+General Physician,Dr. Anjali Rao,"MBBS, MD (General Medicine)",8,400,Mon-Sun,9:00 AM - 12:00 PM
+General Physician,Dr. Suresh Kumar,MBBS,20,350,Mon-Sat,6:00 PM - 9:00 PM

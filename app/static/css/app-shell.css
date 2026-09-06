@@ -1,0 +1,335 @@
+/* =====================================================
+   APP-SHELL — authenticated layout: a fixed sidebar rail,
+   a sticky top bar, and a scrollable content column.
+   Loaded ONLY by app_base.html (public pages keep the
+   top navbar from base.html).
+
+   Coexists with layout.css globals:
+   - body::before is a fixed full-viewport background (z:-2)
+   - .particle-zone{position:relative} / #particleCanvas{z:1}
+   - section{padding:100px 0} — neutralized inside .app-content
+   - .container{max-width:1320px} — app pages don't use it;
+     .app-content owns width + centering instead.
+===================================================== */
+
+.app-shell{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ---------------- Sidebar rail ---------------- */
+
+.app-sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:264px;
+    z-index:1045;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    padding:22px 16px;
+    background:var(--surface-glass);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border-right:1px solid var(--border-soft);
+}
+
+.app-sidebar__top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:6px 8px 0;
+}
+
+.app-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+    text-decoration:none;
+}
+
+.app-brand__logo{
+    width:34px;
+    height:34px;
+    flex-shrink:0;
+}
+
+.app-brand__text{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.02rem;
+    color:var(--text);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* ---------------- Nav links ---------------- */
+
+.app-nav{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    flex:1;
+}
+
+.app-nav__link{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:11px 14px;
+    border-radius:var(--radius-sm);
+    color:var(--text-light);
+    text-decoration:none;
+    font-weight:500;
+    font-size:.96rem;
+    transition:background var(--transition-fast), color var(--transition-fast);
+}
+
+.app-nav__link i{
+    font-size:1.18rem;
+    line-height:1;
+    flex-shrink:0;
+}
+
+.app-nav__link:hover{
+    background:var(--bg-tint);
+    color:var(--text);
+}
+
+.app-nav__link.active{
+    background:var(--glow-primary);
+    color:var(--primary);
+    font-weight:600;
+}
+
+/* Signal-accent marker on the active item — reserved AI/diagnostic gradient */
+.app-nav__link.active::before{
+    content:"";
+    position:absolute;
+    left:4px;
+    top:9px;
+    bottom:9px;
+    width:3px;
+    border-radius:3px;
+    background:var(--signal-grad);
+}
+
+.app-nav__link--muted{
+    font-size:.9rem;
+}
+
+/* ---------------- Sidebar footer (user card) ---------------- */
+
+.app-sidebar__foot{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    padding-top:16px;
+    border-top:1px solid var(--border-soft);
+}
+
+.app-usercard{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:9px 10px;
+    border-radius:var(--radius-sm);
+    text-decoration:none;
+    transition:background var(--transition-fast);
+}
+
+.app-usercard:hover,
+.app-usercard.active{
+    background:var(--bg-tint);
+}
+
+.app-usercard__meta{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    line-height:1.25;
+}
+
+.app-usercard__name{
+    color:var(--text);
+    font-weight:600;
+    font-size:.88rem;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.app-usercard__email{
+    color:var(--text-light);
+    font-size:.72rem;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* ---------------- Main column ---------------- */
+
+.app-main{
+    flex:1;
+    min-width:0;
+    margin-left:264px;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+
+.app-topbar{
+    position:sticky;
+    top:0;
+    z-index:1020;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 40px;
+    background:var(--surface-glass);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border-bottom:1px solid var(--border-soft);
+}
+
+.app-topbar__spacer{
+    flex:1;
+}
+
+.app-topbar__actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.app-hamburger,
+.app-topbar__brand,
+.app-drawer-close{
+    display:none;
+}
+
+.app-topbar__brand{
+    align-items:center;
+    gap:9px;
+    text-decoration:none;
+    color:var(--text);
+    font-family:var(--font-display);
+    font-weight:600;
+}
+
+/* ---------------- Content zone (particle canvas lives here) ---------------- */
+
+.app-content-zone{
+    position:relative;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.app-content{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:1320px;
+    margin:0 auto;
+    padding:34px 40px 72px;
+}
+
+/* Neutralize the global section{padding:100px 0} within the shell —
+   app pages set their own vertical rhythm via .page-header + grid gaps. */
+.app-content section{
+    padding:0;
+}
+
+.app-flash{
+    margin-bottom:24px;
+}
+
+/* ---------------- Focus visibility (a11y floor) ---------------- */
+
+.app-nav__link:focus-visible,
+.app-usercard:focus-visible,
+.app-hamburger:focus-visible,
+.app-drawer-close:focus-visible{
+    outline:2px solid var(--primary);
+    outline-offset:2px;
+}
+
+/* ---------------- Mobile: off-canvas drawer ---------------- */
+
+.app-drawer-backdrop{
+    display:none;
+}
+
+@media (max-width:992px){
+    .app-sidebar{
+        transform:translateX(-100%);
+        transition:transform var(--transition);
+        box-shadow:var(--shadow-lg);
+    }
+
+    .app-shell.drawer-open .app-sidebar{
+        transform:translateX(0);
+    }
+
+    .app-main{
+        margin-left:0;
+    }
+
+    .app-hamburger{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        background:transparent;
+        border:none;
+        color:var(--text);
+        font-size:1.5rem;
+        padding:4px;
+        cursor:pointer;
+    }
+
+    .app-topbar__brand{
+        display:inline-flex;
+    }
+
+    .app-drawer-close{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        background:transparent;
+        border:none;
+        color:var(--text-light);
+        font-size:1.15rem;
+        padding:4px;
+        cursor:pointer;
+    }
+
+    .app-drawer-backdrop{
+        display:block;
+        position:fixed;
+        inset:0;
+        z-index:1040;
+        background:rgba(10,20,32,.55);
+        opacity:0;
+        pointer-events:none;
+        transition:opacity var(--transition);
+    }
+
+    .app-shell.drawer-open .app-drawer-backdrop{
+        opacity:1;
+        pointer-events:auto;
+    }
+
+    .app-topbar{
+        padding:12px 18px;
+    }
+
+    .app-content{
+        padding:24px 18px 56px;
+    }
+}

@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
+{% extends "layout/app_base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/dashboard.css') }}"
@@ -6,91 +6,95 @@
 {% endblock %} {% block title %}Admin Dashboard{% endblock %} {% block content
 %}
 
-<section class="dashboard-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1>Admin Dashboard</h1>
-
-        <p>
-          Monitor users, predictions, diseases and healthcare analytics from one
-          centralized dashboard.
-        </p>
-      </div>
-
-      <div class="col-lg-6 text-center">
-        <i class="bi bi-shield-lock dashboard-svg"></i>
-      </div>
+<header class="page-header">
+  <div class="page-header__bar">
+    <div>
+      <span class="wc-eyebrow">Control Room</span>
+      <h1>Admin Dashboard</h1>
+      <p>
+        Monitor users, predictions, diseases and healthcare analytics from one
+        centralized dashboard.
+      </p>
     </div>
   </div>
-</section>
+</header>
 
-<section class="container py-5">
-  <div class="row g-4">
-    <div class="col-lg-3">
-      <div class="dashboard-stat">
-        <h2>{{ total_users }}</h2>
+<div class="row g-4">
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-people stat-icon"></i>
+      <h2>{{ total_users }}</h2>
 
-        <p>Total Users</p>
-      </div>
-    </div>
-
-    <div class="col-lg-3">
-      <div class="dashboard-stat">
-        <h2>{{ total_diseases }}</h2>
-
-        <p>Diseases</p>
-      </div>
-    </div>
-
-    <div class="col-lg-3">
-      <div class="dashboard-stat">
-        <h2>95%</h2>
-
-        <p>Accuracy</p>
-      </div>
-    </div>
-
-    <div class="col-lg-3">
-      <div class="dashboard-stat">
-        <h2>{{ total_predictions }}</h2>
-
-        <p>Predictions</p>
-      </div>
+      <p>Total Users</p>
     </div>
   </div>
 
-  <div class="admin-table mt-5">
-    <h3 class="mb-4">Recent Activity</h3>
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-virus stat-icon"></i>
+      <h2>{{ total_diseases }}</h2>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>User</th>
-
-          <th>Disease</th>
-
-          <th>Status</th>
-
-          <th>Date</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for p in recent_predictions %}
-        <tr>
-          <td>{{ p.user.name }}</td>
-
-          <td>{{ p.disease.replace('_',' ').title() }}</td>
-
-          <td>Completed</td>
-
-          <td>{{ p.created_at.strftime('%d-%m-%Y') }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      <p>Diseases</p>
+    </div>
   </div>
-</section>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-cpu stat-icon"></i>
+      <h2>{{ avg_confidence }}%</h2>
+
+      <p>Avg Confidence</p>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-clipboard2-pulse stat-icon"></i>
+      <h2>{{ total_predictions }}</h2>
+
+      <p>Predictions</p>
+    </div>
+  </div>
+</div>
+
+<div class="admin-table mt-4">
+  <h3 class="mb-4">Recent Activity</h3>
+
+  {% if recent_predictions %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>User</th>
+
+        <th>Disease</th>
+
+        <th>Status</th>
+
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for p in recent_predictions %}
+      <tr>
+        <td>{{ p.user.name }}</td>
+
+        <td>{{ p.disease.replace('_',' ').title() }}</td>
+
+        <td><span class="status-pill">Completed</span></td>
+
+        <td>{{ p.created_at.strftime('%d-%m-%Y') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% else %}
+
+  <p class="result-empty mb-0">No activity recorded yet.</p>
+
+  {% endif %}
+</div>
 
 {% endblock %}

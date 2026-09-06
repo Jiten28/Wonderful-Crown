@@ -1,106 +1,94 @@
-{% extends "layout/base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
+{% extends "layout/app_base.html" %} {% block body_attrs %}data-particle-density="low"{% endblock %} {% block css %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/dashboard.css') }}"
 />
 {% endblock %} {% block title %}Dashboard{% endblock %} {% block content %}
 
-<!-- ================= HERO ================= -->
+<!-- ================= PAGE HEADER ================= -->
 
-<section class="dashboard-hero">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <h1>Healthcare Dashboard</h1>
+<header class="page-header">
+  <div class="page-header__bar">
+    <div>
+      <span class="wc-eyebrow">Overview</span>
+      <h1>Healthcare Dashboard</h1>
+      <p>
+        Visualize healthcare insights, patient statistics, disease trends and
+        AI-powered reports in one place.
+      </p>
+    </div>
 
-        <p>
-          Visualize healthcare insights, patient statistics, disease trends and
-          AI-powered reports in one place.
-        </p>
-
-        <a href="/prediction" class="btn btn-primary-custom mt-4">
-          Start Prediction
-        </a>
-      </div>
-
-      <div class="col-lg-6 text-center">
-        <i class="bi bi-speedometer2 dashboard-svg"></i>
-      </div>
+    <div class="page-header__actions">
+      <a href="{{ url_for('prediction.prediction') }}" class="btn btn-primary-custom">
+        <i class="bi bi-activity me-2"></i>Start Prediction
+      </a>
     </div>
   </div>
-</section>
+</header>
 
 <!-- ================= KPI ================= -->
 
-<section class="dashboard-kpi">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-3 col-md-6">
-        <div class="dashboard-stat">
-          <i class="bi bi-clipboard2-pulse stat-icon"></i>
-          <h2>{{ total_predictions }}</h2>
-          <p>Total Predictions</p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="dashboard-stat">
-          <i class="bi bi-cpu stat-icon"></i>
-          <h2>
-            {% if latest_prediction %} {{ latest_prediction.confidence }}% {%
-            else %} 0% {% endif %}
-          </h2>
-
-          <p>Last Confidence</p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="dashboard-stat">
-          <i class="bi bi-capsule stat-icon"></i>
-          <h2>
-            {% if latest_prediction %} {{ latest_prediction.disease }} {% else
-            %} - {% endif %}
-          </h2>
-
-          <p>Last Prediction</p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="dashboard-stat">
-          <i class="bi bi-shield-lock stat-icon"></i>
-          <h2>24/7</h2>
-          <p>Availability</p>
-        </div>
-      </div>
+<div class="row g-4">
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-clipboard2-pulse stat-icon"></i>
+      <h2>{{ total_predictions }}</h2>
+      <p>Total Predictions</p>
     </div>
   </div>
-</section>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-cpu stat-icon"></i>
+      <h2>
+        {% if latest_prediction %} {{ latest_prediction.confidence }}% {% else
+        %} 0% {% endif %}
+      </h2>
+
+      <p>Last Confidence</p>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-capsule stat-icon"></i>
+      <h2 class="dashboard-stat__text">
+        {% if latest_prediction %} {{ latest_prediction.disease.replace("_", "
+        ").title() }} {% else %} - {% endif %}
+      </h2>
+
+      <p>Last Prediction</p>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="dashboard-stat">
+      <i class="bi bi-shield-lock stat-icon"></i>
+      <h2>24/7</h2>
+      <p>Availability</p>
+    </div>
+  </div>
+</div>
 
 <!-- ================= CHARTS ================= -->
 
-<section class="dashboard-charts">
-  <div class="container">
-    <div class="row g-4">
-      <div class="col-lg-6">
-        <div class="chart-card">
-          <h4>Disease Distribution</h4>
+<div class="row g-4 mt-1">
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <h4>Disease Distribution</h4>
 
-          <canvas id="diseaseChart"></canvas>
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="chart-card">
-          <h4>Prediction Statistics</h4>
-
-          <canvas id="predictionChart"></canvas>
-        </div>
-      </div>
+      <canvas id="diseaseChart"></canvas>
     </div>
   </div>
-</section>
+
+  <div class="col-lg-6">
+    <div class="chart-card">
+      <h4>Prediction Statistics</h4>
+
+      <canvas id="predictionChart"></canvas>
+    </div>
+  </div>
+</div>
 
 <script>
   const labels = {{ chart_labels|tojson }};
@@ -111,6 +99,10 @@
 
 <script>
   (function () {
+    var reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     function getThemeColors() {
       var styles = getComputedStyle(document.documentElement);
       var read = function (name) {
@@ -156,6 +148,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: reduceMotion ? false : undefined,
           plugins: {
             legend: {
               labels: { color: c.text },
@@ -180,6 +173,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: reduceMotion ? false : undefined,
           plugins: {
             legend: {
               labels: { color: c.text },

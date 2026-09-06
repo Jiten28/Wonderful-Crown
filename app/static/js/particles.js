@@ -83,35 +83,9 @@
     createParticles();
   }
 
-  // --- TEMPORARY DEBUG LOGGING (item 5 — seam investigation) ---
-  // Compares the canvas's internal drawing buffer height against the
-  // .particle-zone wrapper's actual current rendered height. If these
-  // ever diverge, particles are being placed/bounded against a stale
-  // size — that's the seam. Remove once the cause is confirmed.
-  function logSeamDebug(source) {
-    var liveRect = zone.getBoundingClientRect();
-    var diff = liveRect.height - canvas.height;
-    console.log(
-      "[particle-seam-debug] " + source +
-      " | canvas.height=" + canvas.height +
-      " zone.rect.height=" + liveRect.height.toFixed(1) +
-      " diff=" + diff.toFixed(1) +
-      (Math.abs(diff) > 1 ? "  <-- MISMATCH" : "")
-    );
-  }
-
   window.addEventListener("resize", function () {
     resizeCanvas();
-    logSeamDebug("window resize (after resizeCanvas)");
   });
-
-  window.addEventListener(
-    "scroll",
-    function () {
-      logSeamDebug("scroll");
-    },
-    { passive: true }
-  );
 
   // ResizeObserver catches layout shifts window.resize alone would
   // miss — e.g. content pushing .particle-zone taller after images/
@@ -119,7 +93,6 @@
   if (typeof ResizeObserver !== "undefined") {
     var resizeObserver = new ResizeObserver(function () {
       resizeCanvas();
-      logSeamDebug("ResizeObserver (after resizeCanvas)");
     });
     resizeObserver.observe(zone);
   }
@@ -311,13 +284,6 @@
     var heightDrift = Math.abs(liveRect.height - canvas.height);
 
     if (widthDrift > SYNC_TOLERANCE_PX || heightDrift > SYNC_TOLERANCE_PX) {
-      logSeamDebug(
-        "per-frame failsafe caught drift (w:" +
-          widthDrift.toFixed(1) +
-          " h:" +
-          heightDrift.toFixed(1) +
-          ") — resyncing"
-      );
       resizeCanvas();
     }
   }
@@ -354,7 +320,6 @@
 
   fontsReady.then(function () {
     resizeCanvas();
-    logSeamDebug("initial load (after fonts.ready)");
     animate();
   });
 })();

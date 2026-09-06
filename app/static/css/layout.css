@@ -15,9 +15,9 @@ body::before{
     inset:0;
     z-index:-2;
     background:
-        radial-gradient(circle at 80% 10%, var(--glow-primary), transparent 35%),
-        radial-gradient(circle at 10% 80%, var(--glow-secondary), transparent 35%),
-        linear-gradient(180deg, var(--bg), var(--bg));
+        radial-gradient(circle at 82% 8%, var(--glow-primary), transparent 40%),
+        radial-gradient(circle at 8% 82%, var(--glow-secondary), transparent 42%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-tint) 100%);
 }
 
 /* ==========================
@@ -251,6 +251,22 @@ section{
 
 }
 
+/* Dismiss button microinteraction — quarter-turn + full opacity on hover.
+   Adapted from the reference set, kept to one calm state change.
+   Reduced-motion is handled by the global guard in components.css. */
+.alert .btn-close{
+
+    transition:transform var(--transition-fast), opacity var(--transition-fast);
+
+}
+
+.alert .btn-close:hover{
+
+    transform:rotate(90deg);
+    opacity:1;
+
+}
+
 .theme-toggle{
 
     display:flex;
@@ -319,15 +335,19 @@ section{
    FOOTER
 ========================== */
 
+/* The footer must dissolve into the ambient gradient, never sit on it as an
+   opaque slab (the "hard cut" the redesign brief called out). Transparent →
+   deeper base fade, no top border, no margin gap. The .footer class in
+   landing.css carries the same treatment; both kept in sync. */
 footer{
 
-    background:var(--surface);
+    background:transparent;
 
     padding:60px 0;
 
     text-align:center;
 
-    margin-top:100px;
+    margin-top:0;
 
 }
 

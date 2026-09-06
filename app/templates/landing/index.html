@@ -11,55 +11,116 @@
 
 <section class="hero-section">
   <div class="container">
-    <div class="hero-row">
-      <span class="eyebrow">AI-Assisted Diagnosis</span>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-Assisted Diagnosis</span>
 
-      <h1 class="display-2 fw-bold">
-        Know what's happening in your body,
-        <span class="text-primary">before it escalates.</span>
-      </h1>
+        <h1 class="display-2 fw-bold hero-title">
+          Know what's happening in your body,
+          <span class="text-primary">before it escalates.</span>
+        </h1>
 
-      <p class="lead mt-4">
-        Describe your symptoms. Get a confidence-scored assessment, a
-        specialist match, and a plan &mdash; grounded in clinical data, not
-        guesswork.
-      </p>
+        <p class="lead mt-4 hero-lead">
+          Describe your symptoms. Get a confidence-scored assessment, a
+          specialist match, and a plan &mdash; grounded in clinical data, not
+          guesswork.
+        </p>
 
-      <div class="hero-buttons mt-5">
-        <button
-          class="btn btn-primary-custom"
-          onclick="
-            document
-              .querySelector('.features-section')
-              .scrollIntoView({ behavior: 'smooth' })
-          "
-        >
-          Start an assessment
-        </button>
+        <div class="hero-buttons mt-5">
+          <button
+            class="btn btn-primary-custom"
+            onclick="
+              document
+                .querySelector('.features-section')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Start an assessment
+          </button>
 
-        <button
-          class="btn btn-login"
-          onclick="
-            document
-              .querySelector('.workflow-section')
-              .scrollIntoView({ behavior: 'smooth' })
-          "
-        >
-          See how it works
-        </button>
-      </div>
-
-      <div class="hero-stat-strip parallax-el">
-        <div class="hero-stat">
-          <div class="hero-stat-num">41</div>
-          <div class="hero-stat-cap">Conditions covered</div>
+          <button
+            class="btn btn-login"
+            onclick="
+              document
+                .querySelector('.workflow-section')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            See how it works
+          </button>
         </div>
 
-        <div class="hero-stat-divider"></div>
+        <div class="hero-trust">
+          <span><span class="mono">41</span> conditions</span>
+          <span class="hero-trust-dot"></span>
+          <span><span class="mono">132</span> symptoms</span>
+          <span class="hero-trust-dot"></span>
+          <span><span class="mono">12</span> specialties</span>
+        </div>
+      </div>
 
-        <div class="hero-stat">
-          <div class="hero-stat-num">9</div>
-          <div class="hero-stat-cap">Specialties matched</div>
+      <div class="hero-visual">
+        <div
+          class="diagnostic-console parallax-el"
+          id="diagnosticConsole"
+          aria-hidden="true"
+        >
+          <div class="dc-header">
+            <span class="dc-dot"></span>
+            <span class="dc-dot"></span>
+            <span class="dc-dot"></span>
+            <span class="dc-title">Assessment</span>
+            <span class="signal-badge dc-badge">Live preview</span>
+          </div>
+
+          <div class="dc-body">
+            <div class="dc-label">Symptoms</div>
+
+            <div class="dc-chips">
+              <span class="wc-chip dc-chip">High fever</span>
+              <span class="wc-chip dc-chip">Dry cough</span>
+              <span class="wc-chip dc-chip">Fatigue</span>
+              <span class="wc-chip dc-chip">Headache</span>
+            </div>
+
+            <div class="dc-wave">
+              <div class="wc-pulse">
+                <svg viewBox="0 0 600 44" preserveAspectRatio="none">
+                  <path
+                    d="M0,22 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72"
+                  ></path>
+                </svg>
+              </div>
+              <div class="dc-analyzing">Analyzing 132 symptom signals&hellip;</div>
+            </div>
+
+            <div class="dc-result">
+              <div
+                class="wc-ring dc-ring"
+                style="--pct: 87; --wc-ring-size: 116px"
+              >
+                <svg viewBox="0 0 120 120">
+                  <circle class="wc-ring__track" cx="60" cy="60" r="54"></circle>
+                  <circle class="wc-ring__fill" cx="60" cy="60" r="54"></circle>
+                </svg>
+                <div class="wc-ring__label">
+                  <span
+                    ><span class="wc-ring__value">87</span
+                    ><span class="wc-ring__unit">%</span></span
+                  >
+                  <span class="wc-ring__caption">Confidence</span>
+                </div>
+              </div>
+
+              <div class="dc-result-meta">
+                <div class="dc-result-label">Most likely condition</div>
+                <div class="dc-result-name">Influenza</div>
+                <div class="dc-specialist">
+                  <i class="bi bi-arrow-right-short"></i> Refer to Pulmonologist
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -71,17 +132,39 @@
 <section class="features-section">
   <div class="container">
     <div class="text-center mb-5">
+      <span class="eyebrow">What it does</span>
       <h2 class="section-title">Why Choose <span>Wonderful Crown?</span></h2>
 
       <p class="section-subtitle">
-        AI Powered Healthcare Platform for Disease Prediction, Medicine
-        Recommendation and Intelligent Analytics.
+        An AI-powered healthcare platform for disease prediction, medicine
+        recommendation and intelligent analytics.
       </p>
     </div>
 
     <div class="row align-items-center gy-5">
       <div class="col-lg-6">
-        <i class="bi bi-clipboard2-pulse img-fluid feature-image"></i>
+        <div class="feature-viz feature-viz--predict parallax-el">
+          <div class="wc-ring" style="--pct: 87; --wc-ring-size: 104px">
+            <svg viewBox="0 0 120 120">
+              <circle class="wc-ring__track" cx="60" cy="60" r="54"></circle>
+              <circle class="wc-ring__fill" cx="60" cy="60" r="54"></circle>
+            </svg>
+            <div class="wc-ring__label">
+              <span
+                ><span class="wc-ring__value">87</span
+                ><span class="wc-ring__unit">%</span></span
+              >
+            </div>
+          </div>
+
+          <div class="fv-meta">
+            <div class="fv-name">Influenza</div>
+            <div class="fv-sub mono">most likely condition</div>
+            <span class="wc-chip"
+              ><i class="bi bi-arrow-right-short"></i> Pulmonologist</span
+            >
+          </div>
+        </div>
       </div>
 
       <div class="col-lg-6">
@@ -94,14 +177,21 @@
 
         <div class="feature-stat-row">
           <span><strong>132</strong> tracked symptoms</span>
-          <span><strong>4,920</strong> training records</span>
+          <span><strong>41</strong> conditions covered</span>
         </div>
       </div>
     </div>
 
     <div class="row align-items-center gy-5 flex-lg-row-reverse mt-100">
       <div class="col-lg-6">
-        <i class="bi bi-capsule img-fluid feature-image"></i>
+        <div class="feature-viz feature-viz--meds parallax-el">
+          <div class="fv-head"><i class="bi bi-capsule"></i> Recommended plan</div>
+          <ul class="fv-list">
+            <li><i class="bi bi-check-circle-fill"></i> Medicine suggestions</li>
+            <li><i class="bi bi-check-circle-fill"></i> Precautions to take</li>
+            <li><i class="bi bi-check-circle-fill"></i> Diet &amp; workout guidance</li>
+          </ul>
+        </div>
       </div>
 
       <div class="col-lg-6">
@@ -116,15 +206,25 @@
 
     <div class="row align-items-center gy-5 mt-100">
       <div class="col-lg-6">
-        <i class="bi bi-graph-up-arrow img-fluid feature-image"></i>
+        <div class="feature-viz feature-viz--analytics parallax-el">
+          <div class="fv-bars">
+            <span style="--h: 42%"></span>
+            <span style="--h: 66%"></span>
+            <span style="--h: 51%"></span>
+            <span style="--h: 82%"></span>
+            <span style="--h: 35%"></span>
+            <span style="--h: 71%"></span>
+          </div>
+          <div class="fv-caption mono">assessments over time</div>
+        </div>
       </div>
 
       <div class="col-lg-6">
         <h3>Healthcare Analytics</h3>
 
         <p>
-          Beautiful dashboards and insights for better healthcare decision
-          making.
+          Clear dashboards and insights that turn every assessment into
+          something you can act on.
         </p>
       </div>
     </div>
@@ -138,52 +238,60 @@
 <section class="workflow-section">
   <div class="container">
     <div class="text-center mb-5">
+      <span class="eyebrow">The pathway</span>
       <h2 class="section-title">How <span>Wonderful Crown</span> Works</h2>
 
       <p class="section-subtitle">
-        From symptoms to intelligent healthcare recommendations in four simple
-        steps.
+        From symptoms to intelligent healthcare recommendations, in four steps.
       </p>
     </div>
 
-    <div class="row text-center g-4">
-      <div class="col-lg-3 col-md-6">
-        <div class="workflow-card">
-          <i class="bi bi-heart-pulse workflow-icon"></i>
-
-          <h4>Enter Symptoms</h4>
-
-          <p>Select symptoms using our intelligent symptom checker.</p>
+    <div class="flow">
+      <div class="flow-line" aria-hidden="true">
+        <div class="wc-pulse">
+          <svg viewBox="0 0 600 44" preserveAspectRatio="none">
+            <path
+              d="M0,22 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72 h50 l6,-4 l4,8 l4,-26 l4,40 l4,-18 l6,0 h72"
+            ></path>
+          </svg>
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-6">
-        <div class="workflow-card">
-          <i class="bi bi-cpu workflow-icon"></i>
-
-          <h4>AI Prediction</h4>
-
-          <p>Machine Learning predicts the most probable disease.</p>
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="flow-node">
+            <span class="flow-num">01</span>
+            <i class="bi bi-clipboard2-pulse"></i>
+          </div>
+          <h4>Enter symptoms</h4>
+          <p>Select what you're experiencing with the guided symptom checker.</p>
         </div>
-      </div>
 
-      <div class="col-lg-3 col-md-6">
-        <div class="workflow-card">
-          <i class="bi bi-capsule workflow-icon"></i>
+        <div class="flow-step">
+          <div class="flow-node">
+            <span class="flow-num">02</span>
+            <i class="bi bi-cpu"></i>
+          </div>
+          <h4>AI prediction</h4>
+          <p>A trained model returns the most probable condition with a confidence score.</p>
+        </div>
 
+        <div class="flow-step">
+          <div class="flow-node">
+            <span class="flow-num">03</span>
+            <i class="bi bi-capsule"></i>
+          </div>
           <h4>Recommendations</h4>
-
-          <p>Receive medicine, precautions and diet suggestions.</p>
+          <p>Receive medicine, precautions, diet and workout guidance for that condition.</p>
         </div>
-      </div>
 
-      <div class="col-lg-3 col-md-6">
-        <div class="workflow-card">
-          <i class="bi bi-graph-up-arrow workflow-icon"></i>
-
-          <h4>Analytics</h4>
-
-          <p>Visual dashboards help understand healthcare insights.</p>
+        <div class="flow-step">
+          <div class="flow-node">
+            <span class="flow-num">04</span>
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+          <h4>Track &amp; analyze</h4>
+          <p>Every assessment is saved to your dashboard for trends over time.</p>
         </div>
       </div>
     </div>
